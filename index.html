@@ -7,7 +7,10 @@
   <meta name="description" content="Onyx Labs — Moroccan digital agency crafting high-end websites, web platforms, and smart systems.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z' stroke='%23C9A84C' stroke-width='3' fill='none'/%3E%3C/svg%3E">
   <style>
-    /* ===== GOOGLE FONTS ===== */
+    /* ============================================ */
+    /* ONYX LABS — COMPLETE WEBSITE + API + ADMIN   */
+    /* DATABASE: Neon PostgreSQL via GitHub/Vercel  */
+    /* ============================================ */
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -146,7 +149,7 @@
     .footer-links a { font-size: 13px; color: #444; text-decoration: none; transition: color 0.3s; }
     .footer-links a:hover { color: #C9A84C; }
     
-    /* ===== ANIMATIONS & UTILITIES ===== */
+    /* ===== ANIMATIONS ===== */
     .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     .cursor-glow { position: fixed; pointer-events: none; z-index: 9999; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.08s, top 0.08s; }
@@ -175,13 +178,13 @@
   <!-- HERO SECTION -->
   <section id="hero" style="min-height:100vh; background:#080808; display:flex; align-items:center; position:relative; overflow:hidden;"><div style="position:absolute; inset:0;"><div class="hero-hex hero-hex-1"></div><div class="hero-hex hero-hex-2"></div><div class="hero-hex hero-hex-3"></div></div><div class="container" style="text-align:center; z-index:2;"><div style="font-family:'Space Mono'; font-size:11px; color:#C9A84C; letter-spacing:0.3em; margin-bottom:32px;">— ONYX LABS / DIGITAL AGENCY FOR BRANDS —</div><h1 style="font-family:'Cormorant Garamond'; font-weight:300; font-size:clamp(56px,8vw,112px); color:#FFF; line-height:0.95;">We Build Digital<br>Experiences<br><span style="color:#C9A84C;">That Convert.</span></h1><p style="font-size:17px; font-weight:300; color:#999; max-width:520px; margin:32px auto;">Websites. Platforms. Systems. Built for brands that refuse to be average.</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;"><a href="#portfolio" class="btn-primary">See Our Work →</a><a href="#contact" class="btn-ghost">Talk to Us</a></div><div class="stats-row"><div class="stat-item"><div class="stat-number" data-target="50" data-suffix="+">0+</div><div class="stat-label">Projects Delivered</div></div><div class="stat-item"><div class="stat-number" data-target="3" data-suffix="+">0+</div><div class="stat-label">Years Building</div></div><div class="stat-item"><div class="stat-number" data-target="100" data-suffix="%">0%</div><div class="stat-label">Client Satisfaction</div></div></div></div></section>
 
-  <!-- SERVICES SECTION (Static - Good) -->
+  <!-- SERVICES SECTION -->
   <section id="services" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT WE BUILD —</span><div class="section-title">Services Built<br>For <span class="gold">Results.</span></div><div class="section-subtitle">From a simple landing page to a complex business platform — we engineer digital products that perform.</div></div><div class="services-grid" id="servicesGrid"></div></div></section>
 
   <!-- PORTFOLIO SECTION (Dynamic from API) -->
   <section id="portfolio" style="background:#080808; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— OUR WORK —</span><div class="section-title">Projects That<br>Speak Louder.</div><div class="section-subtitle">A selection of recent work — each one built from scratch, delivered on time, and performing above expectations.</div></div><div id="portfolioContainer"></div></div></section>
 
-  <!-- PROCESS SECTION (Static) -->
+  <!-- PROCESS SECTION -->
   <section id="process" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— HOW WE WORK —</span><div class="section-title">The Onyx<br>Process.</div><div class="section-subtitle">We don't improvise. Every project follows a tested methodology designed to eliminate surprises and deliver exceptional results.</div></div><div class="process-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#1A1A1A; margin-top:80px;" id="processGrid"></div></div></section>
 
   <!-- WHY US SECTION -->
