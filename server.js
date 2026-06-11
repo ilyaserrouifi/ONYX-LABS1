@@ -22,6 +22,20 @@ const pool = new Pool({
 });
 
 // ============================================
+// TEMPORARY ROUTE TO RESET ADMIN PASSWORD
+// ============================================
+app.get('/api/reset-admin', async (req, res) => {
+  try {
+    const hash = await bcrypt.hash('admin2025', 10);
+    await pool.query(`UPDATE users SET password = $1 WHERE username = 'admin'`, [hash]);
+    console.log('✅ Admin password reset to: admin2025');
+    res.json({ success: true, message: 'Password reset successfully! Login with admin/admin2025' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================
 // INITIALIZE DATABASE TABLES
 // ============================================
 async function initDB() {
@@ -71,32 +85,30 @@ async function initDB() {
     `);
     console.log('✅ Projects table ready');
 
-    // Insert default admin with FIXED hash (password: admin2025)
-    // Hash = $2a$10$dK6xPqZkZqZkZqZkZqZkZu
-    await pool.query(`
-      INSERT INTO users (username, password, role) 
-      VALUES ('admin', '$2a$10$dK6xPqZkZqZkZqZkZqZkZu', 'admin')
-      ON CONFLICT (username) DO UPDATE SET password = '$2a$10$dK6xPqZkZqZkZqZkZqZkZu'
-    `);
-    console.log('✅ Admin configured (password: admin2025)');
+    // Insert default admin with proper hash
+    const adminExists = await pool.query('SELECT * FROM users WHERE username = $1', ['admin']);
+    if (adminExists.rows.length === 0) {
+      const hashedPassword = await bcrypt.hash('admin2025', 10);
+      await pool.query('INSERT INTO users (username, password, role) VALUES ($1, $2, $3)', ['admin', hashedPassword, 'admin']);
+      console.log('✅ Admin created: admin / admin2025');
+    } else {
+      console.log('✅ Admin already exists');
+    }
 
     // Insert default projects if empty
     const projectsCount = await pool.query('SELECT COUNT(*) FROM projects');
     if (parseInt(projectsCount.rows[0].count) === 0) {
       await pool.query(`
         INSERT INTO projects (title, category, description, technologies, live_url, display_order) VALUES
-        ('Centre Nour Tamuda', 'Education', 'Complete web presence for a professional training center based in Morocco. The platform showcases training programs, coaching services, and methodology.', ARRAY['Next.js', 'Tailwind CSS', 'Framer Motion', 'Vercel'], 'https://centre-nour-tamuda.vercel.app/', 1),
-        ('Titanium Gym', 'Fitness', 'High-energy platform for a serious fitness brand. Bold, dark, performance-focused website with class schedules, membership tiers, and online booking system.', ARRAY['React.js', 'CSS Animations', 'Booking System', 'Vercel'], 'https://titanium-gym-five.vercel.app/', 2),
-        ('P-Tale Coiffure', 'Beauty', 'Elegant editorial-style web presence for a premium hair salon that communicates luxury and enables direct appointment booking.', ARRAY['HTML/CSS/JS', 'Booking Widget', 'Gallery System', 'Vercel'], 'https://p-tale-coiffure.vercel.app/', 3),
-        ('La Maison Dorée', 'Restaurant', 'Une expérience culinaire unique au cœur de Casablanca. Fondée en 2018, La Maison Dorée incarne l\'alliance parfaite entre l\'élégance française et l\'hospitalité marocaine.', ARRAY['Next.js', 'Framer Motion', 'Reservation System', 'Vercel'], 'https://la-maison-dor-e-drab.vercel.app/', 4)
+        ('Centre Nour Tamuda', 'Education', 'Complete web presence for a professional training center based in Morocco.', ARRAY['Next.js', 'Tailwind CSS', 'Framer Motion', 'Vercel'], 'https://centre-nour-tamuda.vercel.app/', 1),
+        ('Titanium Gym', 'Fitness', 'High-energy platform for a serious fitness brand with booking system.', ARRAY['React.js', 'CSS Animations', 'Booking System', 'Vercel'], 'https://titanium-gym-five.vercel.app/', 2),
+        ('P-Tale Coiffure', 'Beauty', 'Elegant editorial-style web presence for a premium hair salon.', ARRAY['HTML/CSS/JS', 'Booking Widget', 'Gallery System', 'Vercel'], 'https://p-tale-coiffure.vercel.app/', 3),
+        ('La Maison Dorée', 'Restaurant', 'Une expérience culinaire unique au cœur de Casablanca.', ARRAY['Next.js', 'Framer Motion', 'Reservation System', 'Vercel'], 'https://la-maison-dor-e-drab.vercel.app/', 4)
       `);
       console.log('✅ Default projects inserted');
-    } else {
-      console.log('✅ Projects already exist');
     }
 
     console.log('🎉 Database initialized successfully!');
-    console.log('📊 Tables: users, messages, projects');
   } catch (err) {
     console.error('❌ Database initialization error:', err);
   }
@@ -109,17 +121,11 @@ initDB();
 // ============================================
 function verifyToken(req, res, next) {
   const authHeader = req.headers['authorization'];
-  if (!authHeader) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
+  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
   const token = authHeader.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ error: 'Invalid token format' });
-  }
+  if (!token) return res.status(401).json({ error: 'Invalid token format' });
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ error: 'Invalid or expired token' });
-    }
+    if (err) return res.status(403).json({ error: 'Invalid or expired token' });
     req.user = decoded;
     next();
   });
@@ -132,20 +138,9 @@ app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   try {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-    if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    
-    // Debug: log the hash from database
-    console.log('Login attempt for:', username);
-    console.log('Stored hash:', result.rows[0].password);
-    
+    if (result.rows.length === 0) return res.status(401).json({ error: 'Invalid credentials' });
     const valid = await bcrypt.compare(password, result.rows[0].password);
-    console.log('Password valid:', valid);
-    
-    if (!valid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
+    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
     const token = jwt.sign(
       { id: result.rows[0].id, username: result.rows[0].username, role: result.rows[0].role },
       process.env.JWT_SECRET,
@@ -286,7 +281,7 @@ app.get('/api/test-db', async (req, res) => {
     res.status(500).json({
       success: false,
       error: err.message,
-      message: '❌ Database connection failed! Check your DATABASE_URL'
+      message: '❌ Database connection failed!'
     });
   }
 });
@@ -308,6 +303,7 @@ app.get('/admin', (req, res) => {
 app.listen(PORT, () => {
   console.log(`\n🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 Test database: http://localhost:${PORT}/api/test-db`);
+  console.log(`🔐 Reset admin: http://localhost:${PORT}/api/reset-admin`);
   console.log(`🌐 Website: http://localhost:${PORT}`);
   console.log(`🔐 Admin: http://localhost:${PORT}/admin`);
   console.log(`\n📝 Default login: admin / admin2025\n`);
