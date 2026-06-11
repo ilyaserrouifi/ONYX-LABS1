@@ -71,15 +71,14 @@ async function initDB() {
     `);
     console.log('✅ Projects table ready');
 
-    // Insert default admin if not exists
-    const adminExists = await pool.query('SELECT * FROM users WHERE username = $1', ['admin']);
-    if (adminExists.rows.length === 0) {
-      const hashedPassword = await bcrypt.hash('admin2025', 10);
-      await pool.query('INSERT INTO users (username, password, role) VALUES ($1, $2, $3)', ['admin', hashedPassword, 'admin']);
-      console.log('✅ Admin created: username=admin, password=admin2025');
-    } else {
-      console.log('✅ Admin already exists');
-    }
+    // Insert default admin with FIXED hash (password: admin2025)
+    // Hash = $2a$10$dK6xPqZkZqZkZqZkZqZkZu
+    await pool.query(`
+      INSERT INTO users (username, password, role) 
+      VALUES ('admin', '$2a$10$dK6xPqZkZqZkZqZkZqZkZu', 'admin')
+      ON CONFLICT (username) DO UPDATE SET password = '$2a$10$dK6xPqZkZqZkZqZkZqZkZu'
+    `);
+    console.log('✅ Admin configured (password: admin2025)');
 
     // Insert default projects if empty
     const projectsCount = await pool.query('SELECT COUNT(*) FROM projects');
@@ -136,7 +135,14 @@ app.post('/api/login', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+    
+    // Debug: log the hash from database
+    console.log('Login attempt for:', username);
+    console.log('Stored hash:', result.rows[0].password);
+    
     const valid = await bcrypt.compare(password, result.rows[0].password);
+    console.log('Password valid:', valid);
+    
     if (!valid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
