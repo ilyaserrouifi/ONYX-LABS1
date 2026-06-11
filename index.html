@@ -7,7 +7,9 @@
   <meta name="description" content="Onyx Labs — Moroccan digital agency crafting high-end websites, web platforms, and smart systems.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z' stroke='%23C9A84C' stroke-width='3' fill='none'/%3E%3C/svg%3E">
   <style>
+    /* ===== GOOGLE FONTS ===== */
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+    
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #080808; color: #E8E8E8; overflow-x: hidden; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
@@ -22,6 +24,8 @@
     .btn-primary:hover { background: #E8C96A; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.25); }
     .btn-ghost { background: transparent; color: #FFF; border: 1px solid #333; }
     .btn-ghost:hover { border-color: #C9A84C; color: #C9A84C; }
+    
+    /* ===== NAVBAR ===== */
     #navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; height: 72px; transition: 0.3s; background: transparent; }
     #navbar.scrolled { background: rgba(8,8,8,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid #1E1E1E; height: 60px; }
     .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
@@ -35,6 +39,8 @@
     .nav-link:hover, .nav-link.active { color: #C9A84C; }
     .nav-cta { border: 1px solid #C9A84C; background: transparent; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #C9A84C; border-radius: 4px; transition: all 0.3s; text-decoration: none; }
     .nav-cta:hover { background: #C9A84C; color: #080808; }
+    
+    /* ===== MOBILE ===== */
     .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 6px; z-index: 1002; }
     .hamburger span { width: 28px; height: 2px; background: #FFF; transition: 0.3s; }
     .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px,6px); }
@@ -45,14 +51,20 @@
     .mobile-nav-links { display: flex; flex-direction: column; gap: 32px; text-align: center; }
     .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 42px; color: #FFF; text-decoration: none; transition: color 0.3s; }
     .mobile-nav-link:hover { color: #C9A84C; }
+    
+    /* ===== HERO DECORATIONS ===== */
     @keyframes rotateHex { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     .hero-hex { position: absolute; border: 1px solid #C9A84C; opacity: 0.04; animation: rotateHex linear infinite; }
     .hero-hex-1 { width: 600px; height: 600px; top: -200px; right: -200px; animation-duration: 80s; }
     .hero-hex-2 { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-duration: 60s; }
     .hero-hex-3 { width: 250px; height: 250px; top: 30%; left: 10%; animation-duration: 45s; opacity: 0.03; }
+    
+    /* ===== STATS ===== */
     .stats-row { display: flex; justify-content: center; gap: 80px; margin-top: 80px; flex-wrap: wrap; }
     .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #C9A84C; }
     .stat-label { font-family: 'Inter', sans-serif; font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px; }
+    
+    /* ===== SERVICES ===== */
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1E1E1E; }
     .service-card { background: #0D0D0D; padding: 48px 40px; position: relative; transition: background 0.4s; }
     .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #C9A84C; transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
@@ -67,6 +79,8 @@
     .service-features li::before { content: '→'; position: absolute; left: 0; color: #C9A84C; font-size: 11px; }
     .service-cta { font-size: 13px; color: #C9A84C; opacity: 0; transform: translateY(8px); transition: 0.3s; }
     .service-card:hover .service-cta { opacity: 1; transform: translateY(0); }
+    
+    /* ===== PORTFOLIO ===== */
     .portfolio-item { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 80px 0; border-bottom: 1px solid #111; }
     .portfolio-item.reverse { direction: rtl; }
     .portfolio-item.reverse > * { direction: ltr; }
@@ -78,22 +92,26 @@
     .browser-dot.yellow { background: #FEBC2E; }
     .browser-dot.green { background: #28C840; }
     .browser-url { font-family: 'Space Mono', monospace; font-size: 11px; color: #444; margin-left: 12px; }
-    .browser-content { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; background-size: cover; background-position: center; }
-    .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; }
+    .browser-content { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; background-size: cover; background-position: center; background-color: #111; }
+    .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 12px; }
     .portfolio-number { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; letter-spacing: 0.2em; display: block; margin-bottom: 12px; }
-    .portfolio-tag { font-family: 'Inter', sans-serif; font-size: 11px; color: #333; letter-spacing: 0.15em; text-transform: uppercase; background: #111; border: 1px solid #222; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+    .portfolio-tag { font-family: 'Inter', sans-serif; font-size: 11px; color: #C9A84C; letter-spacing: 0.15em; text-transform: uppercase; background: #111; border: 1px solid #222; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
     .portfolio-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: #FFF; margin-bottom: 20px; }
-    .portfolio-info p { font-size: 15px; color: #666; line-height: 1.8; margin-bottom: 28px; }
+    .portfolio-info p { font-size: 15px; color: #999; line-height: 1.8; margin-bottom: 28px; }
     .portfolio-tech { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-bottom: 32px; }
-    .portfolio-tech li { font-family: 'Space Mono', monospace; font-size: 11px; color: #555; background: #0D0D0D; border: 1px solid #222; padding: 4px 10px; border-radius: 3px; }
+    .portfolio-tech li { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; background: #0D0D0D; border: 1px solid #222; padding: 4px 10px; border-radius: 3px; }
     .portfolio-link { font-size: 14px; color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); transition: 0.3s; display: inline-block; }
     .portfolio-link:hover { border-color: #C9A84C; padding-right: 8px; }
+    
+    /* ===== WHY US ===== */
     .why-us-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
     .why-us-quote { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 300; font-style: italic; color: #FFF; line-height: 1.4; border-left: 2px solid #C9A84C; padding-left: 32px; position: sticky; top: 120px; }
     .differentiator { padding: 32px 0; border-bottom: 1px solid #111; display: flex; gap: 24px; align-items: flex-start; }
     .differentiator-icon { font-size: 28px; flex-shrink: 0; width: 52px; height: 52px; border: 1px solid #1E1E1E; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #0D0D0D; }
     .differentiator h4 { font-size: 16px; font-weight: 500; color: #E8E8E8; margin-bottom: 8px; }
     .differentiator p { font-size: 14px; color: #555; line-height: 1.7; }
+    
+    /* ===== TESTIMONIALS ===== */
     .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
     .testimonial-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 36px; transition: 0.3s; }
     .testimonial-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
@@ -103,6 +121,8 @@
     .testimonial-author { border-top: 1px solid #1A1A1A; padding-top: 20px; }
     .testimonial-name { font-size: 14px; font-weight: 500; color: #FFF; }
     .testimonial-role { font-size: 12px; color: #555; margin-top: 4px; }
+    
+    /* ===== CONTACT ===== */
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 100px; align-items: start; }
     .contact-info-item { display: flex; gap: 20px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid #111; }
     .contact-info-icon { width: 48px; height: 48px; border: 1px solid #1E1E1E; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #0D0D0D; flex-shrink: 0; }
@@ -117,12 +137,16 @@
     .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #C9A84C; background: #0F0F0F; }
     .btn-submit { width: 100%; background: #C9A84C; color: #080808; border: none; padding: 16px; border-radius: 8px; font-size: 13px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 8px; }
     .btn-submit:hover { background: #E8C96A; transform: translateY(-2px); }
+    
+    /* ===== FOOTER ===== */
     .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; }
     .footer-col-title { font-family: 'Space Mono', monospace; font-size: 10px; color: #333; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; }
     .footer-links { list-style: none; }
     .footer-links li { margin-bottom: 10px; }
     .footer-links a { font-size: 13px; color: #444; text-decoration: none; transition: color 0.3s; }
     .footer-links a:hover { color: #C9A84C; }
+    
+    /* ===== ANIMATIONS & UTILITIES ===== */
     .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     .cursor-glow { position: fixed; pointer-events: none; z-index: 9999; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.08s, top 0.08s; }
@@ -132,74 +156,177 @@
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: #080808; }
     ::-webkit-scrollbar-thumb { background: #1E1E1E; border-radius: 2px; }
+    
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2,1fr); } .testimonials-grid { grid-template-columns: repeat(2,1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 768px) { .container { padding: 0 24px; } .services-grid { grid-template-columns: 1fr; } .portfolio-item, .portfolio-item.reverse { grid-template-columns: 1fr; gap: 40px; direction: ltr; } .why-us-grid { grid-template-columns: 1fr; gap: 60px; } .contact-grid { grid-template-columns: 1fr; gap: 60px; } .testimonials-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } .stats-row { flex-direction: column; gap: 32px; align-items: center; } .nav-links-desktop { display: none; } .hamburger { display: flex; } .why-us-quote { position: static; font-size: 28px; } .browser-content { height: 220px; } .contact-form { padding: 28px 20px; } }
     @media (max-width: 480px) { .section-title { font-size: 36px; } .service-card { padding: 32px 24px; } .portfolio-info h3 { font-size: 32px; } }
   </style>
 </head>
 <body>
+  <!-- WHATSAPP FLOATING BUTTON -->
   <a href="https://wa.me/212669206279" target="_blank" class="whatsapp-fab"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
   <div class="cursor-glow"></div>
 
-  <nav id="navbar"><div class="container nav-container"><a href="#hero" class="logo-wrapper"><svg class="logo-svg" width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><path d="M62 35 L78 45" stroke="#C9A84C" stroke-width="2"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/><circle cx="85" cy="25" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="95" cy="50" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="50" cy="95" r="2.5" fill="#C9A84C"/><circle cx="5" cy="50" r="2" fill="#C9A84C" opacity="0.6"/></svg><div class="logo-text"><span class="logo-name">ONYX LABS</span><span class="logo-sub">DIGITAL AGENCY FOR ————</span></div></a><div class="nav-links-desktop"><a href="#hero" class="nav-link">Home</a><a href="#services" class="nav-link">Services</a><a href="#portfolio" class="nav-link">Portfolio</a><a href="#process" class="nav-link">Process</a><a href="#contact" class="nav-link">Contact</a><a href="#contact" class="nav-cta">Start a Project</a></div><div class="hamburger" id="hamburger"><span></span><span></span><span></span></div></div></nav>
-  <div class="mobile-menu" id="mobile-menu"><div class="mobile-nav-links"><a href="#hero" class="mobile-nav-link">Home</a><a href="#services" class="mobile-nav-link">Services</a><a href="#portfolio" class="mobile-nav-link">Portfolio</a><a href="#process" class="mobile-nav-link">Process</a><a href="#contact" class="mobile-nav-link">Contact</a></div></div>
+  <!-- NAVBAR -->
+  <nav id="navbar"><div class="container nav-container"><a href="#hero" class="logo-wrapper"><svg class="logo-svg" width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><path d="M62 35 L78 45" stroke="#C9A84C" stroke-width="2"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/><circle cx="85" cy="25" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="95" cy="50" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="50" cy="95" r="2.5" fill="#C9A84C"/><circle cx="5" cy="50" r="2" fill="#C9A84C" opacity="0.6"/></svg><div class="logo-text"><span class="logo-name">ONYX LABS</span><span class="logo-sub">DIGITAL AGENCY FOR ————</span></div></a><div class="nav-links-desktop"><a href="#hero" class="nav-link">Home</a><a href="#services" class="nav-link">Services</a><a href="#portfolio" class="nav-link">Portfolio</a><a href="#process" class="nav-link">Process</a><a href="#contact" class="nav-link">Contact</a><a href="/admin" class="nav-cta">Admin</a></div><div class="hamburger" id="hamburger"><span></span><span></span><span></span></div></div></nav>
+  <div class="mobile-menu" id="mobile-menu"><div class="mobile-nav-links"><a href="#hero" class="mobile-nav-link">Home</a><a href="#services" class="mobile-nav-link">Services</a><a href="#portfolio" class="mobile-nav-link">Portfolio</a><a href="#process" class="mobile-nav-link">Process</a><a href="#contact" class="mobile-nav-link">Contact</a><a href="/admin" class="mobile-nav-link">Admin</a></div></div>
 
+  <!-- HERO SECTION -->
   <section id="hero" style="min-height:100vh; background:#080808; display:flex; align-items:center; position:relative; overflow:hidden;"><div style="position:absolute; inset:0;"><div class="hero-hex hero-hex-1"></div><div class="hero-hex hero-hex-2"></div><div class="hero-hex hero-hex-3"></div></div><div class="container" style="text-align:center; z-index:2;"><div style="font-family:'Space Mono'; font-size:11px; color:#C9A84C; letter-spacing:0.3em; margin-bottom:32px;">— ONYX LABS / DIGITAL AGENCY FOR BRANDS —</div><h1 style="font-family:'Cormorant Garamond'; font-weight:300; font-size:clamp(56px,8vw,112px); color:#FFF; line-height:0.95;">We Build Digital<br>Experiences<br><span style="color:#C9A84C;">That Convert.</span></h1><p style="font-size:17px; font-weight:300; color:#999; max-width:520px; margin:32px auto;">Websites. Platforms. Systems. Built for brands that refuse to be average.</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;"><a href="#portfolio" class="btn-primary">See Our Work →</a><a href="#contact" class="btn-ghost">Talk to Us</a></div><div class="stats-row"><div class="stat-item"><div class="stat-number" data-target="50" data-suffix="+">0+</div><div class="stat-label">Projects Delivered</div></div><div class="stat-item"><div class="stat-number" data-target="3" data-suffix="+">0+</div><div class="stat-label">Years Building</div></div><div class="stat-item"><div class="stat-number" data-target="100" data-suffix="%">0%</div><div class="stat-label">Client Satisfaction</div></div></div></div></section>
 
+  <!-- SERVICES SECTION (Static - Good) -->
   <section id="services" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT WE BUILD —</span><div class="section-title">Services Built<br>For <span class="gold">Results.</span></div><div class="section-subtitle">From a simple landing page to a complex business platform — we engineer digital products that perform.</div></div><div class="services-grid" id="servicesGrid"></div></div></section>
 
-  <section id="portfolio" style="background:#080808; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— OUR WORK —</span><div class="section-title">Projects That<br>Speak Louder.</div><div class="section-subtitle">A selection of recent work — each one built from scratch, delivered on time, and performing above expectations.</div></div>
-    <div class="portfolio-item"><div class="portfolio-visual"><div class="browser-mockup"><div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">centre-nour-tamuda.vercel.app</span></div><div class="browser-content" style="background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=500&fit=crop'); background-size:cover;"><div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(10,40,60,0.75), rgba(0,100,120,0.6));"></div><div class="portfolio-overlay"><p style="font-family:'Cormorant Garamond',serif; font-size:32px; color:#FFF;">Centre Nour Tamuda</p><p style="color:rgba(255,255,255,0.8);">Formation & Development</p></div></div></div></div><div class="portfolio-info"><span class="portfolio-number">01</span><span class="portfolio-tag">Education / Training Center</span><h3>Centre Nour Tamuda</h3><p>A complete web presence for a professional training center based in Morocco. The platform showcases their training programs, coaching services, and methodology — designed to build trust and convert visitors into enrolled students.</p><ul class="portfolio-tech"><li>Next.js</li><li>Tailwind CSS</li><li>Framer Motion</li><li>Vercel</li></ul><a href="https://centre-nour-tamuda.vercel.app/" target="_blank" class="portfolio-link">View Live Project →</a></div></div>
-    <div class="portfolio-item reverse"><div class="portfolio-visual"><div class="browser-mockup"><div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">titanium-gym-five.vercel.app</span></div><div class="browser-content" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=500&fit=crop'); background-size:cover;"><div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(0,0,0,0.85), rgba(201,168,76,0.2));"></div><div class="portfolio-overlay"><p style="font-family:'Inter',sans-serif; font-size:28px; font-weight:700; color:#E8B84B;">TITANIUM GYM</p><p style="color:rgba(255,255,255,0.6);">Fitness & Performance</p></div></div></div></div><div class="portfolio-info"><span class="portfolio-number">02</span><span class="portfolio-tag">Fitness / Gym Platform</span><h3>Titanium Gym</h3><p>A high-energy platform for a serious fitness brand. We delivered a bold, dark, performance-focused website with class schedules, membership tiers, trainer profiles, and an online booking system — built to convert gym visitors into paying members.</p><ul class="portfolio-tech"><li>React.js</li><li>CSS Animations</li><li>Booking System</li><li>Vercel</li></ul><a href="https://titanium-gym-five.vercel.app/" target="_blank" class="portfolio-link">View Live Project →</a></div></div>
-    <div class="portfolio-item"><div class="portfolio-visual"><div class="browser-mockup"><div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">p-tale-coiffure.vercel.app</span></div><div class="browser-content" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=500&fit=crop'); background-size:cover;"><div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(210,180,140,0.4), rgba(80,60,40,0.5));"></div><div class="portfolio-overlay"><p style="font-family:'Georgia',serif; font-size:28px; color:#2a1f14;">P-Tale Coiffure</p><p style="color:rgba(42,31,20,0.8);">Premium Beauty Studio</p></div></div></div></div><div class="portfolio-info"><span class="portfolio-number">03</span><span class="portfolio-tag">Beauty / Salon Website</span><h3>P-Tale Coiffure</h3><p>Elegance translated into pixels. A premium hair salon website that communicates luxury, showcases their team's artistry through a visual portfolio, and enables clients to book appointments directly online.</p><ul class="portfolio-tech"><li>HTML/CSS/JS</li><li>Booking Widget</li><li>Gallery System</li><li>Vercel</li></ul><a href="https://p-tale-coiffure.vercel.app/" target="_blank" class="portfolio-link">View Live Project →</a></div></div>
-    <div class="portfolio-item reverse"><div class="portfolio-visual"><div class="browser-mockup"><div class="browser-bar"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">la-maison-dor-e-drab.vercel.app</span></div><div class="browser-content" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop'); background-size:cover;"><div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(0,0,0,0.7), rgba(201,168,76,0.25));"></div><div class="portfolio-overlay"><p style="font-family:'Cormorant Garamond',serif; font-size:32px; color:#FFD700;">La Maison Dorée</p><p style="color:rgba(255,215,0,0.9);">Gastronomy & Fine Dining</p></div></div></div></div><div class="portfolio-info"><span class="portfolio-number">04</span><span class="portfolio-tag">Restaurant / Gastronomic</span><h3>La Maison Dorée</h3><p>Une expérience culinaire unique au cœur de Casablanca. Fondée en 2018, La Maison Dorée incarne l'alliance parfaite entre l'élégance française et l'hospitalité marocaine. Chaque plat est une ode aux saveurs authentiques. Site web: menu interactif, réservation en ligne, galerie immersive.</p><ul class="portfolio-tech"><li>Next.js</li><li>Framer Motion</li><li>Reservation System</li><li>Vercel</li></ul><a href="https://la-maison-dor-e-drab.vercel.app/" target="_blank" class="portfolio-link">View Live Project →</a></div></div>
-  </div></section>
+  <!-- PORTFOLIO SECTION (Dynamic from API) -->
+  <section id="portfolio" style="background:#080808; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— OUR WORK —</span><div class="section-title">Projects That<br>Speak Louder.</div><div class="section-subtitle">A selection of recent work — each one built from scratch, delivered on time, and performing above expectations.</div></div><div id="portfolioContainer"></div></div></section>
 
+  <!-- PROCESS SECTION (Static) -->
   <section id="process" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— HOW WE WORK —</span><div class="section-title">The Onyx<br>Process.</div><div class="section-subtitle">We don't improvise. Every project follows a tested methodology designed to eliminate surprises and deliver exceptional results.</div></div><div class="process-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#1A1A1A; margin-top:80px;" id="processGrid"></div></div></section>
 
-  <section id="why-us" style="background:#080808; padding:120px 0;"><div class="container"><div class="why-us-grid"><div class="why-us-quote">"We don't take on projects we can't win.<br>When we commit — we deliver."<div style="font-family:'Space Mono',monospace; font-size:12px; color:#C9A84C; margin-top:24px;">— Onyx Labs Promise</div></div><div><div class="differentiator"><div class="differentiator-icon">⚡</div><div><h4>We Move Fast Without Breaking Things</h4><p>Speed is our competitive edge. We deliver projects in weeks, not months — using proven systems and clean code that doesn't need to be rebuilt later.</p></div></div><div class="differentiator"><div class="differentiator-icon">💎</div><div><h4>Premium Without The Agency Price</h4><p>Big-agency quality at boutique prices. Because we're lean, focused, and don't have 12 layers of management adding to your invoice.</p></div></div><div class="differentiator"><div class="differentiator-icon">🧠</div><div><h4>We Think Before We Build</h4><p>Every project starts with strategy. We ask why before asking how. The result: digital products that actually solve the right problem.</p></div></div><div class="differentiator"><div class="differentiator-icon">🤝</div><div><h4>We Become Your Tech Team</h4><p>We don't disappear after launch. Many of our clients work with us on an ongoing basis — we become the technical extension of their team.</p></div></div></div></div></div></section>
+  <!-- WHY US SECTION -->
+  <section id="why-us" style="background:#080808; padding:120px 0;"><div class="container"><div class="why-us-grid"><div class="why-us-quote">"We don't take on projects we can't win.<br>When we commit — we deliver."<div style="font-family:'Space Mono',monospace; font-size:12px; color:#C9A84C; margin-top:24px;">— Onyx Labs Promise</div></div><div><div class="differentiator"><div class="differentiator-icon">⚡</div><div><h4>We Move Fast Without Breaking Things</h4><p>Speed is our competitive edge. We deliver projects in weeks, not months — using proven systems and clean code.</p></div></div><div class="differentiator"><div class="differentiator-icon">💎</div><div><h4>Premium Without The Agency Price</h4><p>Big-agency quality at boutique prices. Lean, focused, no layers of management.</p></div></div><div class="differentiator"><div class="differentiator-icon">🧠</div><div><h4>We Think Before We Build</h4><p>Every project starts with strategy. We ask why before asking how.</p></div></div><div class="differentiator"><div class="differentiator-icon">🤝</div><div><h4>We Become Your Tech Team</h4><p>We don't disappear after launch. We become your technical partner.</p></div></div></div></div></div></section>
 
-  <section id="testimonials" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT CLIENTS SAY —</span><div class="section-title">The Results<br>Speak Clearly.</div></div><div class="testimonials-grid"><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">Onyx Labs transformed our online presence completely. They didn't just build a website — they built a business tool. Since launch, our inquiries have tripled and the quality of leads has improved dramatically.</div><div class="testimonial-author"><div class="testimonial-name">Hamid R.</div><div class="testimonial-role">Director, Formation Centre</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">We needed a platform that matched the energy of our gym — intense, clean, and powerful. Onyx Labs delivered exactly that. The booking system alone has saved us hours every week.</div><div class="testimonial-author"><div class="testimonial-name">Karim M.</div><div class="testimonial-role">Owner, Titanium Gym</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">As a beauty studio, image is everything. Onyx Labs understood this immediately. They created something elegant that represents our brand perfectly. The appointment booking system is seamless.</div><div class="testimonial-author"><div class="testimonial-name">Nadia S.</div><div class="testimonial-role">Founder, P-Tale Coiffure</div></div></div></div></div></section>
+  <!-- TESTIMONIALS SECTION -->
+  <section id="testimonials" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT CLIENTS SAY —</span><div class="section-title">The Results<br>Speak Clearly.</div></div><div class="testimonials-grid"><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">Onyx Labs transformed our online presence completely. They built a business tool. Our inquiries have tripled.</div><div class="testimonial-author"><div class="testimonial-name">Hamid R.</div><div class="testimonial-role">Director, Formation Centre</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">The platform matches the energy of our gym. The booking system alone has saved us hours every week.</div><div class="testimonial-author"><div class="testimonial-name">Karim M.</div><div class="testimonial-role">Owner, Titanium Gym</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">They created something elegant that represents our brand perfectly. The appointment system is seamless.</div><div class="testimonial-author"><div class="testimonial-name">Nadia S.</div><div class="testimonial-role">Founder, P-Tale Coiffure</div></div></div></div></div></section>
 
-  <section id="contact" style="background:#080808; padding:120px 0;"><div class="container"><div class="contact-grid"><div><span class="section-eyebrow">— GET IN TOUCH —</span><div class="section-title">Let's Build<br>Something Great.</div><div class="section-subtitle" style="margin-bottom:40px;">Tell us about your project. We respond to every serious inquiry within 24 hours. No commitment, no pressure — just a conversation about what you want to build.</div><div class="contact-info-item"><div class="contact-info-icon">📞</div><div><div class="contact-info-label">CALL OR WHATSAPP</div><a href="tel:+212669206279" class="contact-info-value">+212 669-206279</a><div class="contact-info-sub">Available Saturday–Thursday, 9am–8pm</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📸</div><div><div class="contact-info-label">FOLLOW OUR WORK</div><a href="https://www.instagram.com/lonyxlabs" target="_blank" class="contact-info-value">@lonyxlabs</a><div class="contact-info-sub">See our latest projects and behind the scenes</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📍</div><div><div class="contact-info-label">BASED IN</div><div class="contact-info-value">Morocco 🇲🇦</div><div class="contact-info-sub">Working with clients globally</div></div></div><div style="margin-top:32px;"><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Typical project timeline: 2–6 weeks</span><br><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Response time: within 24 hours</span></div></div><div class="contact-form"><form id="contact-form"><div class="form-group"><label class="form-label">FULL NAME</label><input type="text" class="form-input" required placeholder="Your full name"></div><div class="form-group"><label class="form-label">EMAIL</label><input type="email" class="form-input" required placeholder="your@email.com"></div><div class="form-group"><label class="form-label">PHONE / WHATSAPP</label><input type="tel" class="form-input" placeholder="+212 6XX XXX XXX"></div><div class="form-group"><label class="form-label">PROJECT TYPE</label><select class="form-select"><option>Web Design & Development</option><option>Custom Web Platform / System</option><option>E-Commerce Store</option><option>Mobile Web Application</option><option>Automation & Integrations</option><option>Brand & UI Design</option><option>Restaurant / Gastronomy</option></select></div><div class="form-group"><label class="form-label">BUDGET RANGE</label><select class="form-select"><option>Under 5,000 MAD</option><option>5,000 – 15,000 MAD</option><option>15,000 – 30,000 MAD</option><option>30,000 – 60,000 MAD</option><option>60,000+ MAD</option></select></div><div class="form-group"><label class="form-label">PROJECT DESCRIPTION</label><textarea class="form-textarea" rows="5" placeholder="Tell us about your project — what do you want to build? Who is it for? What's the main goal? Any specific features needed?"></textarea></div><button type="submit" class="btn-submit">Send Message →</button><p style="font-family:'Inter', sans-serif; font-size:11px; color:#444; text-align:center; margin-top:20px;">Your information is kept private. No spam, ever.</p></form></div></div></div></section>
+  <!-- CONTACT SECTION -->
+  <section id="contact" style="background:#080808; padding:120px 0;"><div class="container"><div class="contact-grid"><div><span class="section-eyebrow">— GET IN TOUCH —</span><div class="section-title">Let's Build<br>Something Great.</div><div class="section-subtitle" style="margin-bottom:40px;">Tell us about your project. We respond within 24 hours.</div><div class="contact-info-item"><div class="contact-info-icon">📞</div><div><div class="contact-info-label">CALL OR WHATSAPP</div><a href="tel:+212669206279" class="contact-info-value">+212 669-206279</a><div class="contact-info-sub">Sat–Thu, 9am–8pm</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📸</div><div><div class="contact-info-label">FOLLOW OUR WORK</div><a href="https://www.instagram.com/lonyxlabs" target="_blank" class="contact-info-value">@lonyxlabs</a><div class="contact-info-sub">Latest projects & behind the scenes</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📍</div><div><div class="contact-info-label">BASED IN</div><div class="contact-info-value">Morocco 🇲🇦</div><div class="contact-info-sub">Working with clients globally</div></div></div><div style="margin-top:32px;"><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Typical project timeline: 2–6 weeks</span><br><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Response time: within 24 hours</span></div></div><div class="contact-form"><form id="contact-form"><div class="form-group"><label class="form-label">FULL NAME</label><input type="text" class="form-input" id="formName" required placeholder="Your full name"></div><div class="form-group"><label class="form-label">EMAIL</label><input type="email" class="form-input" id="formEmail" required placeholder="your@email.com"></div><div class="form-group"><label class="form-label">PHONE</label><input type="tel" class="form-input" id="formPhone" placeholder="+212 6XX XXX XXX"></div><div class="form-group"><label class="form-label">PROJECT TYPE</label><select class="form-select" id="formProject"><option>Web Design & Development</option><option>Custom Web Platform</option><option>E-Commerce Store</option><option>Mobile App</option><option>Automation</option><option>Brand & UI Design</option></select></div><div class="form-group"><label class="form-label">BUDGET</label><select class="form-select" id="formBudget"><option>Under 5,000 MAD</option><option>5,000 – 15,000 MAD</option><option>15,000 – 30,000 MAD</option><option>30,000 – 60,000 MAD</option><option>60,000+ MAD</option></select></div><div class="form-group"><label class="form-label">MESSAGE</label><textarea class="form-textarea" id="formMessage" rows="5" placeholder="Tell us about your project..."></textarea></div><button type="submit" class="btn-submit">Send Message →</button><p style="font-size:11px; color:#444; text-align:center; margin-top:20px;">Your information is kept private. No spam.</p></form></div></div></div></section>
 
-  <footer style="background:#040404; border-top:1px solid #111; padding:80px 0 40px;"><div class="container"><div class="footer-grid"><div><div class="logo-wrapper" style="margin-bottom:20px;"><svg width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg><div><div class="logo-name">ONYX LABS</div><div class="logo-sub">DIGITAL AGENCY FOR ————</div></div></div><p style="font-family:'Inter', sans-serif; font-size:14px; color:#444; line-height:1.8;">Crafting high-end web & smart systems for businesses, brands & startups across Morocco and beyond.</p><a href="https://www.instagram.com/lonyxlabs" target="_blank" style="color:#555; text-decoration:none; margin-top:20px; display:inline-block;">📸 @lonyxlabs</a></div><div><div class="footer-col-title">SERVICES</div><ul class="footer-links"><li><a href="#">Web Design & Development</a></li><li><a href="#">Custom Web Systems</a></li><li><a href="#">E-Commerce Solutions</a></li><li><a href="#">Mobile-First Applications</a></li><li><a href="#">Automation & Integrations</a></li><li><a href="#">Brand & UI Design</a></li></ul></div><div><div class="footer-col-title">COMPANY</div><ul class="footer-links"><li><a href="#portfolio">Our Work</a></li><li><a href="#process">Our Process</a></li><li><a href="#why-us">Why Onyx Labs</a></li><li><a href="#contact">Start a Project</a></li><li><a href="https://www.instagram.com/lonyxlabs" target="_blank">Instagram @lonyxlabs</a></li></ul></div><div><div class="footer-col-title">CONTACT</div><ul class="footer-links"><li><a href="tel:+212669206279">📞 +212 669-206279</a></li><li><a href="https://wa.me/212669206279" target="_blank">💬 WhatsApp Us</a></li><li><a href="https://www.instagram.com/lonyxlabs" target="_blank">📸 @lonyxlabs</a></li><li>📍 Morocco 🇲🇦</li></ul></div></div><div style="border-top:1px solid #0F0F0F; padding-top:32px; margin-top:60px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;"><span style="font-family:'Inter', sans-serif; font-size:12px; color:#333;">© 2025 Onyx Labs. All rights reserved.</span><span style="font-family:'Inter', sans-serif; font-size:12px; color:#333;">Crafted with precision in Morocco 🇲🇦</span><span style="font-family:'Inter', sans-serif; font-size:12px; color:#333;">Built by Onyx Labs</span></div></div></footer>
+  <!-- FOOTER -->
+  <footer style="background:#040404; border-top:1px solid #111; padding:80px 0 40px;"><div class="container"><div class="footer-grid"><div><div class="logo-wrapper" style="margin-bottom:20px;"><svg width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg><div><div class="logo-name">ONYX LABS</div><div class="logo-sub">DIGITAL AGENCY FOR ————</div></div></div><p style="font-size:14px; color:#444; line-height:1.8;">Crafting high-end web & smart systems for businesses, brands & startups across Morocco and beyond.</p><a href="https://www.instagram.com/lonyxlabs" target="_blank" style="color:#555; text-decoration:none; margin-top:20px; display:inline-block;">📸 @lonyxlabs</a></div><div><div class="footer-col-title">SERVICES</div><ul class="footer-links"><li><a href="#">Web Design</a></li><li><a href="#">Custom Systems</a></li><li><a href="#">E-Commerce</a></li><li><a href="#">Automation</a></li><li><a href="#">Brand & UI</a></li></ul></div><div><div class="footer-col-title">COMPANY</div><ul class="footer-links"><li><a href="#portfolio">Our Work</a></li><li><a href="#process">Process</a></li><li><a href="#why-us">Why Us</a></li><li><a href="#contact">Start a Project</a></li><li><a href="https://www.instagram.com/lonyxlabs">Instagram</a></li></ul></div><div><div class="footer-col-title">CONTACT</div><ul class="footer-links"><li><a href="tel:+212669206279">📞 +212 669-206279</a></li><li><a href="https://wa.me/212669206279">💬 WhatsApp</a></li><li><a href="https://www.instagram.com/lonyxlabs">📸 @lonyxlabs</a></li><li>📍 Morocco</li></ul></div></div><div style="border-top:1px solid #0F0F0F; padding-top:32px; margin-top:60px; display:flex; justify-content:space-between; flex-wrap:wrap;"><span>© 2025 Onyx Labs. All rights reserved.</span><span>Crafted with precision in Morocco 🇲🇦</span><span>Built by Onyx Labs</span></div></div></footer>
 
   <script>
+    // API Base URL (Vercel deployment)
+    const API_URL = 'https://onyx-labs-1-npyl.vercel.app/api';
+    
+    // ======================== SERVICES INJECTION ========================
     const servicesData = [
-      { num: "01", title: "Web Design & Development", desc: "We craft websites that don't just look good — they convert. Every layout decision is engineered with purpose.", features: ["Custom UI/UX Design", "Responsive across all devices", "Performance-optimized (90+ Lighthouse)", "CMS integration", "SEO-ready architecture"] },
-      { num: "02", title: "Custom Web Platforms & Systems", desc: "Some businesses need more than a website — they need a system. Dashboards, admin panels, multi-user systems.", features: ["Custom dashboard development", "Admin & management panels", "Multi-role user systems", "Real-time data features", "API design & documentation"] },
-      { num: "03", title: "E-Commerce Solutions", desc: "Selling online requires more than a product catalog. We build e-commerce experiences that guide customers from discovery to checkout.", features: ["Custom Shopify / WooCommerce", "Payment gateway integration", "Inventory management", "Analytics & conversion tracking"] },
-      { num: "04", title: "Mobile-First Web Applications", desc: "Over 70% of web traffic is mobile. We build PWAs and app-like experiences that feel native.", features: ["Progressive Web Apps (PWA)", "Touch-optimized interfaces", "Offline-first capabilities", "Push notification support"] },
-      { num: "05", title: "Automation & Smart Integrations", desc: "Manual processes are expensive. We eliminate repetitive tasks with smart automation and API integrations.", features: ["API integrations", "Business process automation", "CRM & ERP integrations", "Automated reporting"] },
-      { num: "06", title: "Brand Identity & UI Design", desc: "Before we write code, we ensure your brand has the visual language to compete. Logos, design systems, UI kits.", features: ["Logo design & brand guidelines", "UI design systems", "Website redesign", "Icon & illustration design"] }
+      { num: "01", title: "Web Design & Development", desc: "We craft websites that don't just look good — they convert. Every layout decision is engineered with purpose.", features: ["Custom UI/UX Design", "Responsive across all devices", "Performance 90+ Lighthouse", "CMS integration", "SEO-ready"] },
+      { num: "02", title: "Custom Web Platforms & Systems", desc: "Some businesses need more than a website — they need a system. Dashboards, admin panels, multi-user systems.", features: ["Custom dashboard", "Admin & management panels", "Multi-role systems", "Real-time data", "API design"] },
+      { num: "03", title: "E-Commerce Solutions", desc: "Selling online requires more than a product catalog. We build e-commerce experiences that guide customers from discovery to checkout.", features: ["Shopify/WooCommerce", "Payment gateways", "Inventory management", "Analytics"] },
+      { num: "04", title: "Mobile-First Web Apps", desc: "Over 70% of web traffic is mobile. We build PWAs and app-like experiences that feel native.", features: ["Progressive Web Apps", "Touch-optimized", "Offline-first", "Push notifications"] },
+      { num: "05", title: "Automation & Integrations", desc: "Manual processes are expensive. We eliminate repetitive tasks with smart automation and API integrations.", features: ["API integrations", "Business automation", "CRM/ERP", "Automated reporting"] },
+      { num: "06", title: "Brand Identity & UI Design", desc: "Before we write code, we ensure your brand has the visual language to compete. Logos, design systems, UI kits.", features: ["Logo & guidelines", "UI systems", "Website redesign", "Icon design"] }
     ];
     const servicesGrid = document.getElementById('servicesGrid');
-    if(servicesGrid) { servicesData.forEach(s => { const card = document.createElement('div'); card.className = 'service-card fade-up'; card.innerHTML = `<div class="service-number">${s.num}</div><div class="service-icon">🔷</div><h3 class="service-title">${s.title}</h3><p class="service-desc">${s.desc}</p><ul class="service-features">${s.features.map(f => `<li>${f}</li>`).join('')}</ul><div class="service-cta">Explore →</div>`; servicesGrid.appendChild(card); }); }
-
+    if(servicesGrid) servicesData.forEach(s => { const card = document.createElement('div'); card.className = 'service-card fade-up'; card.innerHTML = `<div class="service-number">${s.num}</div><div class="service-icon">🔷</div><h3 class="service-title">${s.title}</h3><p class="service-desc">${s.desc}</p><ul class="service-features">${s.features.map(f => `<li>${f}</li>`).join('')}</ul><div class="service-cta">Explore →</div>`; servicesGrid.appendChild(card); });
+    
+    // ======================== PROCESS STEPS ========================
     const processSteps = [
-      { num: "01", title: "Discovery & Strategy", duration: "Week 1", desc: "Before we touch a keyboard, we understand your business. We run a deep discovery session covering your goals, competitors, target audience, and technical constraints.", details: ["Brand & business audit", "Competitor landscape analysis", "User persona definition", "Technical requirements mapping"] },
-      { num: "02", title: "Design & Prototype", duration: "Week 2–3", desc: "With strategy locked, our designers create high-fidelity mockups in Figma. We design every screen, every state, every mobile breakpoint before writing code.", details: ["Wireframes & information architecture", "High-fidelity Figma designs", "Interactive prototype", "Design system & component library"] },
-      { num: "03", title: "Build & Develop", duration: "Week 3–6", desc: "We build fast, clean, and scalable. Our code is production-ready from day one — no technical debt, no quick hacks.", details: ["Frontend (React/Next.js)", "Backend (Node.js/Python)", "Database design & optimization", "API development & integrations"] },
-      { num: "04", title: "Launch & Support", duration: "Week 6–7", desc: "Launch day is the beginning. We conduct thorough testing across devices, browsers, and use cases. We deploy to production and stay available for post-launch support.", details: ["Cross-browser & device testing", "Performance & security audit", "Production deployment", "30-day post-launch support"] }
+      { num: "01", title: "Discovery & Strategy", duration: "Week 1", desc: "Deep discovery session covering goals, competitors, target audience, technical constraints.", details: ["Brand & business audit", "Competitor analysis", "User personas", "Technical mapping"] },
+      { num: "02", title: "Design & Prototype", duration: "Week 2–3", desc: "High-fidelity mockups in Figma. Every screen, every state, every breakpoint.", details: ["Wireframes", "Figma designs", "Interactive prototype", "Design system"] },
+      { num: "03", title: "Build & Develop", duration: "Week 3–6", desc: "Clean, scalable code. Production-ready from day one — no technical debt.", details: ["Frontend React/Next.js", "Backend Node.js", "Database design", "API development"] },
+      { num: "04", title: "Launch & Support", duration: "Week 6–7", desc: "Thorough testing across devices. Deploy to production with 30-day post-launch support.", details: ["Cross-browser testing", "Performance audit", "Production deploy", "30-day support"] }
     ];
     const processGrid = document.getElementById('processGrid');
-    if(processGrid) { processSteps.forEach(step => { const div = document.createElement('div'); div.className = 'fade-up'; div.style.background = '#0D0D0D'; div.style.padding = '48px 36px'; div.innerHTML = `<div style="font-family:'Cormorant Garamond'; font-size:80px; font-weight:300; color:#C9A84C; opacity:0.12; line-height:1; margin-bottom:-20px;">${step.num}</div><div style="font-family:'Space Mono'; font-size:10px; color:#C9A84C; letter-spacing:0.2em; margin-bottom:20px;">${step.duration}</div><h3 style="font-family:'Cormorant Garamond'; font-size:24px; font-weight:400; color:#FFF; margin-bottom:16px;">${step.title}</h3><p style="font-size:13px; color:#555; line-height:1.8; margin-bottom:24px;">${step.desc}</p><ul style="list-style:none; border-top:1px solid #1A1A1A; padding-top:20px;">${step.details.map(d => `<li style="font-size:12px; color:#444; padding:5px 0; display:flex; align-items:center; gap:8px;"><span style="width:4px; height:4px; border-radius:50%; background:#C9A84C;"></span>${d}</li>`).join('')}</ul>`; processGrid.appendChild(div); }); }
-
+    if(processGrid) processSteps.forEach(step => { const div = document.createElement('div'); div.className = 'fade-up'; div.style.background = '#0D0D0D'; div.style.padding = '48px 36px'; div.innerHTML = `<div style="font-family:'Cormorant Garamond'; font-size:80px; font-weight:300; color:#C9A84C; opacity:0.12;">${step.num}</div><div style="font-family:'Space Mono'; font-size:10px; color:#C9A84C; letter-spacing:0.2em;">${step.duration}</div><h3 style="font-family:'Cormorant Garamond'; font-size:24px; color:#FFF;">${step.title}</h3><p style="font-size:13px; color:#555; margin:16px 0;">${step.desc}</p><ul style="border-top:1px solid #1A1A1A; padding-top:20px;">${step.details.map(dt => `<li style="font-size:12px; color:#444; padding:5px 0; display:flex; gap:8px;"><span style="width:4px; height:4px; background:#C9A84C; border-radius:50%;"></span>${dt}</li>`).join('')}</ul>`; processGrid.appendChild(div); });
+    
+    // ======================== LOAD PROJECTS FROM API ========================
+    async function loadProjects() {
+      try {
+        const res = await fetch(`${API_URL}/projects`);
+        const projects = await res.json();
+        const container = document.getElementById('portfolioContainer');
+        if(!container) return;
+        
+        if(projects.length === 0) {
+          container.innerHTML = '<div class="section-header-centered"><p style="color:#999;">No projects yet. Check back soon!</p></div>';
+          return;
+        }
+        
+        container.innerHTML = projects.map((p, idx) => `
+          <div class="portfolio-item ${idx % 2 === 1 ? 'reverse' : ''}">
+            <div class="portfolio-visual">
+              <div class="browser-mockup">
+                <div class="browser-bar">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                  <span class="browser-url">${(p.live_url || 'project.demo').replace('https://', '')}</span>
+                </div>
+                <div class="browser-content" style="background: linear-gradient(135deg, #0D0D0D, #1A1A1A);">
+                  <div class="portfolio-overlay">
+                    <p style="font-family:'Cormorant Garamond',serif; font-size:32px; color:#C9A84C;">${escapeHtml(p.title)}</p>
+                    <p style="color:rgba(255,255,255,0.6);">${escapeHtml(p.category || 'Project')}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <span class="portfolio-number">${String(idx+1).padStart(2,'0')}</span>
+              <span class="portfolio-tag">${escapeHtml(p.category || 'Project')}</span>
+              <h3>${escapeHtml(p.title)}</h3>
+              <p>${escapeHtml(p.description || '')}</p>
+              <ul class="portfolio-tech">${(p.technologies || []).map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+              <a href="${p.live_url || '#'}" target="_blank" class="portfolio-link">View Live Project →</a>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) { console.error('Error loading projects:', e); }
+    }
+    
+    // ======================== CONTACT FORM SUBMIT TO API ========================
+    const contactForm = document.getElementById('contact-form');
+    if(contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = {
+          name: document.getElementById('formName')?.value,
+          email: document.getElementById('formEmail')?.value,
+          phone: document.getElementById('formPhone')?.value,
+          projectType: document.getElementById('formProject')?.value,
+          budget: document.getElementById('formBudget')?.value,
+          message: document.getElementById('formMessage')?.value
+        };
+        const btn = contactForm.querySelector('.btn-submit');
+        const original = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch(`${API_URL}/messages`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+          if(res.ok) {
+            btn.textContent = '✓ Message Sent!';
+            btn.style.background = '#2D7D46';
+            setTimeout(() => { btn.textContent = original; btn.style.background = '#C9A84C'; btn.disabled = false; contactForm.reset(); }, 2000);
+          } else throw new Error('Failed to send');
+        } catch(err) { btn.textContent = original; btn.disabled = false; alert('Error sending message. Please try again.'); }
+      });
+    }
+    
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+    
+    // ======================== NAVBAR SCROLL ========================
     window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+    
+    // ======================== HAMBURGER MENU ========================
     const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobile-menu');
-    if(hamburger && mobileMenu) { hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; }); document.querySelectorAll('.mobile-nav-link').forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }); }); }
-    const fadeObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    if(hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
+      document.querySelectorAll('.mobile-nav-link').forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }); });
+    }
+    
+    // ======================== INTERSECTION OBSERVER (FADE-UP) ========================
+    const fadeObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
     document.querySelectorAll('.fade-up, .service-card, .portfolio-item, .testimonial-card, .differentiator, .contact-info-item').forEach(el => fadeObserver.observe(el));
+    
+    // ======================== COUNT-UP STATS ========================
     function countUp(el, target, suffix = '') { let start = 0, step = target / 120; const timer = setInterval(() => { start += step; if(start >= target) { el.textContent = target + suffix; clearInterval(timer); } else { el.textContent = Math.floor(start) + suffix; } }, 16); }
     const statsObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting && !entry.target.dataset.counted) { entry.target.dataset.counted = 'true'; const target = parseInt(entry.target.dataset.target); const suffix = entry.target.dataset.suffix || ''; countUp(entry.target, target, suffix); } }); }, { threshold: 0.5 });
     document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+    
+    // ======================== CURSOR GLOW ========================
     const cursorGlow = document.querySelector('.cursor-glow'); document.addEventListener('mousemove', (e) => { if(cursorGlow) { cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px'; } });
-    const contactForm = document.getElementById('contact-form');
-    if(contactForm) { contactForm.addEventListener('submit', (e) => { e.preventDefault(); const btn = contactForm.querySelector('.btn-submit'); const original = btn.textContent; btn.textContent = 'Sending...'; btn.disabled = true; setTimeout(() => { btn.textContent = '✓ Message Sent!'; btn.style.background = '#2D7D46'; btn.style.color = '#fff'; setTimeout(() => { btn.textContent = original; btn.style.background = '#C9A84C'; btn.style.color = '#080808'; btn.disabled = false; contactForm.reset(); }, 2000); }, 1200); }); }
+    
+    // ======================== SMOOTH SCROLL ========================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if(target) { const offset = document.getElementById('navbar')?.offsetHeight || 0; window.scrollTo({ top: target.offsetTop - offset - 20, behavior: 'smooth' }); } }); });
+    
+    // ======================== ACTIVE NAV LINK ========================
     const sections = document.querySelectorAll('section[id]'); const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => { let current = ''; sections.forEach(section => { const sectionTop = section.offsetTop - 100; if(window.scrollY >= sectionTop) current = section.getAttribute('id'); }); navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href') === '#' + current) link.classList.add('active'); }); });
+    
+    // Load projects on page load
+    loadProjects();
   </script>
 </body>
 </html>
