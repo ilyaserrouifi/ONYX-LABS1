@@ -2,225 +2,334 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Onyx Labs — Admin Dashboard | Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Onyx Labs — Digital Agency For Brands, Businesses & Startups</title>
+  <meta name="description" content="Onyx Labs — Moroccan digital agency crafting high-end websites, web platforms, and smart systems.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z' stroke='%23C9A84C' stroke-width='3' fill='none'/%3E%3C/svg%3E">
   <style>
+    /* ============================================ */
+    /* ONYX LABS — COMPLETE WEBSITE + API + ADMIN   */
+    /* DATABASE: Neon PostgreSQL via GitHub/Vercel  */
+    /* ============================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+    
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #080808; color: #E8E8E8; overflow-x: hidden; }
-    .navbar { background: #0D0D0D; border-bottom: 1px solid #1E1E1E; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 16px; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #C9A84C; display: flex; align-items: center; gap: 12px; }
-    .logo svg { width: 36px; height: 36px; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 32px; }
-    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
-    .stat-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 28px; text-align: center; transition: 0.3s; }
-    .stat-card:hover { border-color: #C9A84C; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .section-eyebrow { font-family: 'Space Mono', monospace; font-size: 10px; color: #C9A84C; letter-spacing: 0.35em; text-transform: uppercase; display: block; margin-bottom: 20px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 5vw, 68px); font-weight: 300; color: #FFFFFF; line-height: 1.05; margin-bottom: 20px; }
+    .section-title .gold { color: #C9A84C; }
+    .section-subtitle { font-family: 'Inter', sans-serif; font-size: 16px; color: #999; line-height: 1.8; max-width: 560px; }
+    .section-header-centered { text-align: center; margin-bottom: 80px; }
+    .section-header-centered .section-subtitle { margin: 0 auto; }
+    .btn-primary, .btn-ghost { display: inline-block; padding: 14px 32px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; cursor: pointer; }
+    .btn-primary { background: #C9A84C; color: #080808; border: 1px solid #C9A84C; }
+    .btn-primary:hover { background: #E8C96A; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.25); }
+    .btn-ghost { background: transparent; color: #FFF; border: 1px solid #333; }
+    .btn-ghost:hover { border-color: #C9A84C; color: #C9A84C; }
+    
+    /* ===== NAVBAR ===== */
+    #navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; height: 72px; transition: 0.3s; background: transparent; }
+    #navbar.scrolled { background: rgba(8,8,8,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid #1E1E1E; height: 60px; }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .logo-wrapper { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-svg { width: 42px; height: 42px; }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #FFF; letter-spacing: 0.15em; line-height: 1; }
+    .logo-sub { font-family: 'Space Mono', monospace; font-size: 7px; color: #C9A84C; letter-spacing: 0.25em; margin-top: 4px; }
+    .nav-links-desktop { display: flex; gap: 42px; align-items: center; }
+    .nav-link { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; color: #999; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+    .nav-link:hover, .nav-link.active { color: #C9A84C; }
+    .nav-cta { border: 1px solid #C9A84C; background: transparent; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #C9A84C; border-radius: 4px; transition: all 0.3s; text-decoration: none; }
+    .nav-cta:hover { background: #C9A84C; color: #080808; }
+    
+    /* ===== MOBILE ===== */
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 6px; z-index: 1002; }
+    .hamburger span { width: 28px; height: 2px; background: #FFF; transition: 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px,6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
+    .mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0D0D0D; z-index: 1001; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.4s; }
+    .mobile-menu.active { opacity: 1; visibility: visible; }
+    .mobile-nav-links { display: flex; flex-direction: column; gap: 32px; text-align: center; }
+    .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 42px; color: #FFF; text-decoration: none; transition: color 0.3s; }
+    .mobile-nav-link:hover { color: #C9A84C; }
+    
+    /* ===== HERO DECORATIONS ===== */
+    @keyframes rotateHex { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .hero-hex { position: absolute; border: 1px solid #C9A84C; opacity: 0.04; animation: rotateHex linear infinite; }
+    .hero-hex-1 { width: 600px; height: 600px; top: -200px; right: -200px; animation-duration: 80s; }
+    .hero-hex-2 { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-duration: 60s; }
+    .hero-hex-3 { width: 250px; height: 250px; top: 30%; left: 10%; animation-duration: 45s; opacity: 0.03; }
+    
+    /* ===== STATS ===== */
+    .stats-row { display: flex; justify-content: center; gap: 80px; margin-top: 80px; flex-wrap: wrap; }
     .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #C9A84C; }
-    .stat-label { font-size: 12px; color: #666; margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
-    .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #C9A84C; }
-    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 12px; font-weight: 500; transition: 0.3s; }
-    .btn-primary { background: #C9A84C; color: #080808; }
-    .btn-primary:hover { background: #E8C96A; transform: translateY(-2px); }
-    .btn-danger { background: #ff6b6b; color: #fff; }
-    .btn-danger:hover { background: #ff5252; }
-    .btn-secondary { background: #1E1E1E; color: #E8E8E8; border: 1px solid #333; }
-    .btn-secondary:hover { border-color: #C9A84C; color: #C9A84C; }
-    table { width: 100%; border-collapse: collapse; background: #0D0D0D; border-radius: 12px; overflow: hidden; }
-    th, td { padding: 14px; text-align: left; border-bottom: 1px solid #1E1E1E; }
-    th { color: #C9A84C; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: #111; }
-    td { font-size: 13px; }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 24px; }
-    .project-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 20px; transition: 0.3s; }
-    .project-card:hover { border-color: #C9A84C; transform: translateY(-4px); }
-    .project-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; background: #1A1A1A; }
-    .project-card h4 { font-size: 18px; margin-bottom: 8px; }
-    .project-card p { font-size: 12px; color: #999; margin-bottom: 16px; line-height: 1.6; }
-    .card-actions { display: flex; gap: 12px; }
-    .delete-btn { background: transparent; border: 1px solid #ff6b6b; color: #ff6b6b; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
-    .delete-btn:hover { background: rgba(255,107,107,0.2); }
-    .edit-btn { background: transparent; border: 1px solid #C9A84C; color: #C9A84C; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
-    .edit-btn:hover { background: rgba(201,168,76,0.2); }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
-    .modal-content { background: #0D0D0D; border: 1px solid #C9A84C; border-radius: 24px; padding: 32px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
-    .modal-content h3 { color: #C9A84C; margin-bottom: 24px; }
-    input, textarea, select { width: 100%; background: #080808; border: 1px solid #1E1E1E; border-radius: 8px; padding: 12px; color: #FFF; margin-bottom: 16px; font-family: 'Inter'; font-size: 14px; }
-    input:focus, textarea:focus { outline: none; border-color: #C9A84C; }
-    .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #080808; }
-    .login-card { background: #0D0D0D; border: 1px solid #C9A84C; border-radius: 24px; padding: 48px; width: 100%; max-width: 400px; text-align: center; }
-    .login-card h2 { color: #C9A84C; margin-bottom: 24px; }
-    .login-card input { margin-bottom: 20px; }
-    .table-container { overflow-x: auto; margin-bottom: 48px; }
-    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 500; }
-    .status-read { background: rgba(46, 125, 50, 0.2); color: #4caf50; border: 1px solid #4caf50; }
-    .status-unread { background: rgba(201, 168, 76, 0.2); color: #C9A84C; border: 1px solid #C9A84C; }
-    @media (max-width: 768px) { .stats { grid-template-columns: repeat(2,1fr); } .container { padding: 20px; } .section-header { flex-direction: column; align-items: flex-start; } }
-    @media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+    .stat-label { font-family: 'Inter', sans-serif; font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px; }
+    
+    /* ===== SERVICES ===== */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1E1E1E; }
+    .service-card { background: #0D0D0D; padding: 48px 40px; position: relative; transition: background 0.4s; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #C9A84C; transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: #111; }
+    .service-number { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; letter-spacing: 0.2em; margin-bottom: 24px; }
+    .service-icon { width: 48px; height: 48px; margin-bottom: 24px; font-size: 32px; }
+    .service-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: #FFF; margin-bottom: 16px; }
+    .service-desc { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 24px; }
+    .service-features { list-style: none; margin-bottom: 32px; }
+    .service-features li { font-size: 13px; color: #555; padding: 6px 0; border-bottom: 1px solid #1A1A1A; padding-left: 16px; position: relative; }
+    .service-features li::before { content: '→'; position: absolute; left: 0; color: #C9A84C; font-size: 11px; }
+    .service-cta { font-size: 13px; color: #C9A84C; opacity: 0; transform: translateY(8px); transition: 0.3s; }
+    .service-card:hover .service-cta { opacity: 1; transform: translateY(0); }
+    
+    /* ===== PORTFOLIO ===== */
+    .portfolio-item { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 80px 0; border-bottom: 1px solid #111; }
+    .portfolio-item.reverse { direction: rtl; }
+    .portfolio-item.reverse > * { direction: ltr; }
+    .browser-mockup { border-radius: 12px; overflow: hidden; border: 1px solid #1E1E1E; box-shadow: 0 40px 80px rgba(0,0,0,0.6); transition: 0.4s; }
+    .portfolio-item:hover .browser-mockup { transform: translateY(-8px); box-shadow: 0 60px 100px rgba(0,0,0,0.7), 0 0 40px rgba(201,168,76,0.08); }
+    .browser-bar { background: #1A1A1A; padding: 10px 16px; display: flex; gap: 8px; align-items: center; }
+    .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .browser-dot.red { background: #FF5F57; }
+    .browser-dot.yellow { background: #FEBC2E; }
+    .browser-dot.green { background: #28C840; }
+    .browser-url { font-family: 'Space Mono', monospace; font-size: 11px; color: #444; margin-left: 12px; }
+    .browser-content { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; background-size: cover; background-position: center; background-color: #111; }
+    .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 12px; }
+    .portfolio-number { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; letter-spacing: 0.2em; display: block; margin-bottom: 12px; }
+    .portfolio-tag { font-family: 'Inter', sans-serif; font-size: 11px; color: #C9A84C; letter-spacing: 0.15em; text-transform: uppercase; background: #111; border: 1px solid #222; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+    .portfolio-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: #FFF; margin-bottom: 20px; }
+    .portfolio-info p { font-size: 15px; color: #999; line-height: 1.8; margin-bottom: 28px; }
+    .portfolio-tech { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-bottom: 32px; }
+    .portfolio-tech li { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; background: #0D0D0D; border: 1px solid #222; padding: 4px 10px; border-radius: 3px; }
+    .portfolio-link { font-size: 14px; color: #C9A84C; text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); transition: 0.3s; display: inline-block; }
+    .portfolio-link:hover { border-color: #C9A84C; padding-right: 8px; }
+    
+    /* ===== WHY US ===== */
+    .why-us-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+    .why-us-quote { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 300; font-style: italic; color: #FFF; line-height: 1.4; border-left: 2px solid #C9A84C; padding-left: 32px; position: sticky; top: 120px; }
+    .differentiator { padding: 32px 0; border-bottom: 1px solid #111; display: flex; gap: 24px; align-items: flex-start; }
+    .differentiator-icon { font-size: 28px; flex-shrink: 0; width: 52px; height: 52px; border: 1px solid #1E1E1E; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #0D0D0D; }
+    .differentiator h4 { font-size: 16px; font-weight: 500; color: #E8E8E8; margin-bottom: 8px; }
+    .differentiator p { font-size: 14px; color: #555; line-height: 1.7; }
+    
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+    .testimonial-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 36px; transition: 0.3s; }
+    .testimonial-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+    .testimonial-stars { color: #C9A84C; font-size: 14px; margin-bottom: 20px; letter-spacing: 3px; }
+    .testimonial-quote { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: #CCC; line-height: 1.7; margin-bottom: 28px; }
+    .testimonial-quote::before { content: '"'; color: #C9A84C; font-size: 48px; line-height: 0; vertical-align: -18px; margin-right: 4px; }
+    .testimonial-author { border-top: 1px solid #1A1A1A; padding-top: 20px; }
+    .testimonial-name { font-size: 14px; font-weight: 500; color: #FFF; }
+    .testimonial-role { font-size: 12px; color: #555; margin-top: 4px; }
+    
+    /* ===== CONTACT ===== */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 100px; align-items: start; }
+    .contact-info-item { display: flex; gap: 20px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid #111; }
+    .contact-info-icon { width: 48px; height: 48px; border: 1px solid #1E1E1E; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #0D0D0D; flex-shrink: 0; }
+    .contact-info-label { font-family: 'Space Mono', monospace; font-size: 9px; color: #444; letter-spacing: 0.25em; display: block; margin-bottom: 6px; }
+    .contact-info-value { font-size: 16px; font-weight: 500; color: #FFF; text-decoration: none; display: block; margin-bottom: 4px; transition: color 0.3s; }
+    .contact-info-value:hover { color: #C9A84C; }
+    .contact-info-sub { font-size: 12px; color: #444; }
+    .contact-form { background: #0D0D0D; border: 1px solid #1A1A1A; border-radius: 20px; padding: 48px; }
+    .form-group { margin-bottom: 24px; }
+    .form-label { font-family: 'Space Mono', monospace; font-size: 10px; color: #555; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    .form-input, .form-select, .form-textarea { width: 100%; background: #111; border: 1px solid #1E1E1E; border-radius: 8px; padding: 14px 16px; font-family: 'Inter', sans-serif; font-size: 14px; color: #E8E8E8; transition: border 0.3s; outline: none; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #C9A84C; background: #0F0F0F; }
+    .btn-submit { width: 100%; background: #C9A84C; color: #080808; border: none; padding: 16px; border-radius: 8px; font-size: 13px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 8px; }
+    .btn-submit:hover { background: #E8C96A; transform: translateY(-2px); }
+    
+    /* ===== FOOTER ===== */
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; }
+    .footer-col-title { font-family: 'Space Mono', monospace; font-size: 10px; color: #333; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a { font-size: 13px; color: #444; text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: #C9A84C; }
+    
+    /* ===== ANIMATIONS ===== */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .cursor-glow { position: fixed; pointer-events: none; z-index: 9999; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.08s, top 0.08s; }
+    .whatsapp-fab { position: fixed; bottom: 32px; right: 32px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: 0.3s; text-decoration: none; animation: pulse-whatsapp 2s infinite; }
+    .whatsapp-fab:hover { transform: scale(1.1); }
+    @keyframes pulse-whatsapp { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 32px rgba(37,211,102,0.7); } }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: #1E1E1E; border-radius: 2px; }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2,1fr); } .testimonials-grid { grid-template-columns: repeat(2,1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) { .container { padding: 0 24px; } .services-grid { grid-template-columns: 1fr; } .portfolio-item, .portfolio-item.reverse { grid-template-columns: 1fr; gap: 40px; direction: ltr; } .why-us-grid { grid-template-columns: 1fr; gap: 60px; } .contact-grid { grid-template-columns: 1fr; gap: 60px; } .testimonials-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; } .stats-row { flex-direction: column; gap: 32px; align-items: center; } .nav-links-desktop { display: none; } .hamburger { display: flex; } .why-us-quote { position: static; font-size: 28px; } .browser-content { height: 220px; } .contact-form { padding: 28px 20px; } }
+    @media (max-width: 480px) { .section-title { font-size: 36px; } .service-card { padding: 32px 24px; } .portfolio-info h3 { font-size: 32px; } }
   </style>
 </head>
 <body>
-<div id="loginContainer" class="login-container">
-  <div class="login-card">
-    <div style="margin-bottom: 20px;"><svg width="50" height="50" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3" fill="none"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg></div>
-    <h2>ONYX LABS</h2>
-    <p style="color:#666; margin-bottom:24px;">Admin Dashboard · Database</p>
-    <input type="text" id="loginUsername" placeholder="Username" autocomplete="off">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button onclick="login()" class="btn btn-primary" style="width:100%;">Login →</button>
-    <p id="loginError" style="color:#ff6b6b; margin-top:20px; font-size:12px; display:none;">Invalid credentials (admin / admin2025)</p>
-  </div>
-</div>
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <a href="https://wa.me/212669206279" target="_blank" class="whatsapp-fab"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+  <div class="cursor-glow"></div>
 
-<div id="dashboard" style="display:none;">
-  <div class="navbar">
-    <div class="logo"><svg width="30" height="30" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3" fill="none"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/></svg> ONYX LABS | ADMIN</div>
-    <div><button class="btn btn-secondary" onclick="logout()">Logout</button></div>
-  </div>
-  <div class="container">
-    <div class="stats">
-      <div class="stat-card"><div class="stat-number" id="totalMessages">0</div><div class="stat-label">Total Messages</div></div>
-      <div class="stat-card"><div class="stat-number" id="todayMessages">0</div><div class="stat-label">Today</div></div>
-      <div class="stat-card"><div class="stat-number" id="totalProjects">0</div><div class="stat-label">Projects</div></div>
-      <div class="stat-card"><div class="stat-number" id="unreadMessages">0</div><div class="stat-label">Unread</div></div>
-    </div>
+  <!-- NAVBAR -->
+  <nav id="navbar"><div class="container nav-container"><a href="#hero" class="logo-wrapper"><svg class="logo-svg" width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><path d="M62 35 L78 45" stroke="#C9A84C" stroke-width="2"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/><circle cx="85" cy="25" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="95" cy="50" r="2" fill="#C9A84C" opacity="0.6"/><circle cx="50" cy="95" r="2.5" fill="#C9A84C"/><circle cx="5" cy="50" r="2" fill="#C9A84C" opacity="0.6"/></svg><div class="logo-text"><span class="logo-name">ONYX LABS</span><span class="logo-sub">DIGITAL AGENCY FOR ————</span></div></a><div class="nav-links-desktop"><a href="#hero" class="nav-link">Home</a><a href="#services" class="nav-link">Services</a><a href="#portfolio" class="nav-link">Portfolio</a><a href="#process" class="nav-link">Process</a><a href="#contact" class="nav-link">Contact</a><a href="/admin" class="nav-cta">Admin</a></div><div class="hamburger" id="hamburger"><span></span><span></span><span></span></div></div></nav>
+  <div class="mobile-menu" id="mobile-menu"><div class="mobile-nav-links"><a href="#hero" class="mobile-nav-link">Home</a><a href="#services" class="mobile-nav-link">Services</a><a href="#portfolio" class="mobile-nav-link">Portfolio</a><a href="#process" class="mobile-nav-link">Process</a><a href="#contact" class="mobile-nav-link">Contact</a><a href="/admin" class="mobile-nav-link">Admin</a></div></div>
 
-    <div class="section-header"><h2>📬 Messages & Reservations</h2><button class="btn btn-primary" onclick="exportCSV()">📎 Export CSV</button></div>
-    <div class="table-container"><table id="messagesTable"><thead><tr><th>ID</th><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Project</th><th>Budget</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="messagesBody"></tbody></table></div>
+  <!-- HERO SECTION -->
+  <section id="hero" style="min-height:100vh; background:#080808; display:flex; align-items:center; position:relative; overflow:hidden;"><div style="position:absolute; inset:0;"><div class="hero-hex hero-hex-1"></div><div class="hero-hex hero-hex-2"></div><div class="hero-hex hero-hex-3"></div></div><div class="container" style="text-align:center; z-index:2;"><div style="font-family:'Space Mono'; font-size:11px; color:#C9A84C; letter-spacing:0.3em; margin-bottom:32px;">— ONYX LABS / DIGITAL AGENCY FOR BRANDS —</div><h1 style="font-family:'Cormorant Garamond'; font-weight:300; font-size:clamp(56px,8vw,112px); color:#FFF; line-height:0.95;">We Build Digital<br>Experiences<br><span style="color:#C9A84C;">That Convert.</span></h1><p style="font-size:17px; font-weight:300; color:#999; max-width:520px; margin:32px auto;">Websites. Platforms. Systems. Built for brands that refuse to be average.</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;"><a href="#portfolio" class="btn-primary">See Our Work →</a><a href="#contact" class="btn-ghost">Talk to Us</a></div><div class="stats-row"><div class="stat-item"><div class="stat-number" data-target="50" data-suffix="+">0+</div><div class="stat-label">Projects Delivered</div></div><div class="stat-item"><div class="stat-number" data-target="3" data-suffix="+">0+</div><div class="stat-label">Years Building</div></div><div class="stat-item"><div class="stat-number" data-target="100" data-suffix="%">0%</div><div class="stat-label">Client Satisfaction</div></div></div></div></section>
 
-    <div class="section-header"><h2>📁 Portfolio Projects</h2><button class="btn btn-primary" onclick="openProjectModal()">+ Add Project</button></div>
-    <div id="projectsGrid" class="projects-grid"></div>
-  </div>
-</div>
+  <!-- SERVICES SECTION -->
+  <section id="services" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT WE BUILD —</span><div class="section-title">Services Built<br>For <span class="gold">Results.</span></div><div class="section-subtitle">From a simple landing page to a complex business platform — we engineer digital products that perform.</div></div><div class="services-grid" id="servicesGrid"></div></div></section>
 
-<div id="projectModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Add New Project</h3><input type="hidden" id="projectId"><input type="text" id="projectTitle" placeholder="Project Title *"><input type="text" id="projectCategory" placeholder="Category (e.g., Web, Mobile)"><textarea id="projectDescription" rows="3" placeholder="Project Description"></textarea><input type="text" id="projectTechnologies" placeholder="Technologies (comma separated)"><input type="text" id="projectLiveUrl" placeholder="Live URL (https://...)"><input type="text" id="projectImageUrl" placeholder="Image URL (optional)"><input type="number" id="projectOrder" placeholder="Display Order (1,2,3...)"><div style="display:flex; gap:12px; margin-top:20px;"><button class="btn btn-primary" onclick="saveProject()">Save Project</button><button class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button></div></div></div>
+  <!-- PORTFOLIO SECTION (Dynamic from API) -->
+  <section id="portfolio" style="background:#080808; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— OUR WORK —</span><div class="section-title">Projects That<br>Speak Louder.</div><div class="section-subtitle">A selection of recent work — each one built from scratch, delivered on time, and performing above expectations.</div></div><div id="portfolioContainer"></div></div></section>
 
-<script>
-const API_URL = '';
-let token = null;
+  <!-- PROCESS SECTION -->
+  <section id="process" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— HOW WE WORK —</span><div class="section-title">The Onyx<br>Process.</div><div class="section-subtitle">We don't improvise. Every project follows a tested methodology designed to eliminate surprises and deliver exceptional results.</div></div><div class="process-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#1A1A1A; margin-top:80px;" id="processGrid"></div></div></section>
 
-async function login() {
-  const username = document.getElementById('loginUsername').value;
-  const password = document.getElementById('loginPassword').value;
-  try {
-    const res = await fetch(API_URL + '/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-    const data = await res.json();
-    if (res.ok) {
-      token = data.token;
-      localStorage.setItem('adminToken', token);
-      document.getElementById('loginContainer').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      loadData();
-    } else {
-      document.getElementById('loginError').style.display = 'block';
-      setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
+  <!-- WHY US SECTION -->
+  <section id="why-us" style="background:#080808; padding:120px 0;"><div class="container"><div class="why-us-grid"><div class="why-us-quote">"We don't take on projects we can't win.<br>When we commit — we deliver."<div style="font-family:'Space Mono',monospace; font-size:12px; color:#C9A84C; margin-top:24px;">— Onyx Labs Promise</div></div><div><div class="differentiator"><div class="differentiator-icon">⚡</div><div><h4>We Move Fast Without Breaking Things</h4><p>Speed is our competitive edge. We deliver projects in weeks, not months — using proven systems and clean code.</p></div></div><div class="differentiator"><div class="differentiator-icon">💎</div><div><h4>Premium Without The Agency Price</h4><p>Big-agency quality at boutique prices. Lean, focused, no layers of management.</p></div></div><div class="differentiator"><div class="differentiator-icon">🧠</div><div><h4>We Think Before We Build</h4><p>Every project starts with strategy. We ask why before asking how.</p></div></div><div class="differentiator"><div class="differentiator-icon">🤝</div><div><h4>We Become Your Tech Team</h4><p>We don't disappear after launch. We become your technical partner.</p></div></div></div></div></div></section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section id="testimonials" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT CLIENTS SAY —</span><div class="section-title">The Results<br>Speak Clearly.</div></div><div class="testimonials-grid"><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">Onyx Labs transformed our online presence completely. They built a business tool. Our inquiries have tripled.</div><div class="testimonial-author"><div class="testimonial-name">Hamid R.</div><div class="testimonial-role">Director, Formation Centre</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">The platform matches the energy of our gym. The booking system alone has saved us hours every week.</div><div class="testimonial-author"><div class="testimonial-name">Karim M.</div><div class="testimonial-role">Owner, Titanium Gym</div></div></div><div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><div class="testimonial-quote">They created something elegant that represents our brand perfectly. The appointment system is seamless.</div><div class="testimonial-author"><div class="testimonial-name">Nadia S.</div><div class="testimonial-role">Founder, P-Tale Coiffure</div></div></div></div></div></section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" style="background:#080808; padding:120px 0;"><div class="container"><div class="contact-grid"><div><span class="section-eyebrow">— GET IN TOUCH —</span><div class="section-title">Let's Build<br>Something Great.</div><div class="section-subtitle" style="margin-bottom:40px;">Tell us about your project. We respond within 24 hours.</div><div class="contact-info-item"><div class="contact-info-icon">📞</div><div><div class="contact-info-label">CALL OR WHATSAPP</div><a href="tel:+212669206279" class="contact-info-value">+212 669-206279</a><div class="contact-info-sub">Sat–Thu, 9am–8pm</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📸</div><div><div class="contact-info-label">FOLLOW OUR WORK</div><a href="https://www.instagram.com/lonyxlabs" target="_blank" class="contact-info-value">@lonyxlabs</a><div class="contact-info-sub">Latest projects & behind the scenes</div></div></div><div class="contact-info-item"><div class="contact-info-icon">📍</div><div><div class="contact-info-label">BASED IN</div><div class="contact-info-value">Morocco 🇲🇦</div><div class="contact-info-sub">Working with clients globally</div></div></div><div style="margin-top:32px;"><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Typical project timeline: 2–6 weeks</span><br><span style="font-family:'Space Mono'; font-size:11px; color:#C9A84C;">Response time: within 24 hours</span></div></div><div class="contact-form"><form id="contact-form"><div class="form-group"><label class="form-label">FULL NAME</label><input type="text" class="form-input" id="formName" required placeholder="Your full name"></div><div class="form-group"><label class="form-label">EMAIL</label><input type="email" class="form-input" id="formEmail" required placeholder="your@email.com"></div><div class="form-group"><label class="form-label">PHONE</label><input type="tel" class="form-input" id="formPhone" placeholder="+212 6XX XXX XXX"></div><div class="form-group"><label class="form-label">PROJECT TYPE</label><select class="form-select" id="formProject"><option>Web Design & Development</option><option>Custom Web Platform</option><option>E-Commerce Store</option><option>Mobile App</option><option>Automation</option><option>Brand & UI Design</option></select></div><div class="form-group"><label class="form-label">BUDGET</label><select class="form-select" id="formBudget"><option>Under 5,000 MAD</option><option>5,000 – 15,000 MAD</option><option>15,000 – 30,000 MAD</option><option>30,000 – 60,000 MAD</option><option>60,000+ MAD</option></select></div><div class="form-group"><label class="form-label">MESSAGE</label><textarea class="form-textarea" id="formMessage" rows="5" placeholder="Tell us about your project..."></textarea></div><button type="submit" class="btn-submit">Send Message →</button><p style="font-size:11px; color:#444; text-align:center; margin-top:20px;">Your information is kept private. No spam.</p></form></div></div></div></section>
+
+  <!-- FOOTER -->
+  <footer style="background:#040404; border-top:1px solid #111; padding:80px 0 40px;"><div class="container"><div class="footer-grid"><div><div class="logo-wrapper" style="margin-bottom:20px;"><svg width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg><div><div class="logo-name">ONYX LABS</div><div class="logo-sub">DIGITAL AGENCY FOR ————</div></div></div><p style="font-size:14px; color:#444; line-height:1.8;">Crafting high-end web & smart systems for businesses, brands & startups across Morocco and beyond.</p><a href="https://www.instagram.com/lonyxlabs" target="_blank" style="color:#555; text-decoration:none; margin-top:20px; display:inline-block;">📸 @lonyxlabs</a></div><div><div class="footer-col-title">SERVICES</div><ul class="footer-links"><li><a href="#">Web Design</a></li><li><a href="#">Custom Systems</a></li><li><a href="#">E-Commerce</a></li><li><a href="#">Automation</a></li><li><a href="#">Brand & UI</a></li></ul></div><div><div class="footer-col-title">COMPANY</div><ul class="footer-links"><li><a href="#portfolio">Our Work</a></li><li><a href="#process">Process</a></li><li><a href="#why-us">Why Us</a></li><li><a href="#contact">Start a Project</a></li><li><a href="https://www.instagram.com/lonyxlabs">Instagram</a></li></ul></div><div><div class="footer-col-title">CONTACT</div><ul class="footer-links"><li><a href="tel:+212669206279">📞 +212 669-206279</a></li><li><a href="https://wa.me/212669206279">💬 WhatsApp</a></li><li><a href="https://www.instagram.com/lonyxlabs">📸 @lonyxlabs</a></li><li>📍 Morocco</li></ul></div></div><div style="border-top:1px solid #0F0F0F; padding-top:32px; margin-top:60px; display:flex; justify-content:space-between; flex-wrap:wrap;"><span>© 2025 Onyx Labs. All rights reserved.</span><span>Crafted with precision in Morocco 🇲🇦</span><span>Built by Onyx Labs</span></div></div></footer>
+
+  <script>
+    // API Base URL (Vercel deployment)
+    const API_URL = 'https://onyx-labs-1-npyl.vercel.app/api';
+    
+    // ======================== SERVICES INJECTION ========================
+    const servicesData = [
+      { num: "01", title: "Web Design & Development", desc: "We craft websites that don't just look good — they convert. Every layout decision is engineered with purpose.", features: ["Custom UI/UX Design", "Responsive across all devices", "Performance 90+ Lighthouse", "CMS integration", "SEO-ready"] },
+      { num: "02", title: "Custom Web Platforms & Systems", desc: "Some businesses need more than a website — they need a system. Dashboards, admin panels, multi-user systems.", features: ["Custom dashboard", "Admin & management panels", "Multi-role systems", "Real-time data", "API design"] },
+      { num: "03", title: "E-Commerce Solutions", desc: "Selling online requires more than a product catalog. We build e-commerce experiences that guide customers from discovery to checkout.", features: ["Shopify/WooCommerce", "Payment gateways", "Inventory management", "Analytics"] },
+      { num: "04", title: "Mobile-First Web Apps", desc: "Over 70% of web traffic is mobile. We build PWAs and app-like experiences that feel native.", features: ["Progressive Web Apps", "Touch-optimized", "Offline-first", "Push notifications"] },
+      { num: "05", title: "Automation & Integrations", desc: "Manual processes are expensive. We eliminate repetitive tasks with smart automation and API integrations.", features: ["API integrations", "Business automation", "CRM/ERP", "Automated reporting"] },
+      { num: "06", title: "Brand Identity & UI Design", desc: "Before we write code, we ensure your brand has the visual language to compete. Logos, design systems, UI kits.", features: ["Logo & guidelines", "UI systems", "Website redesign", "Icon design"] }
+    ];
+    const servicesGrid = document.getElementById('servicesGrid');
+    if(servicesGrid) servicesData.forEach(s => { const card = document.createElement('div'); card.className = 'service-card fade-up'; card.innerHTML = `<div class="service-number">${s.num}</div><div class="service-icon">🔷</div><h3 class="service-title">${s.title}</h3><p class="service-desc">${s.desc}</p><ul class="service-features">${s.features.map(f => `<li>${f}</li>`).join('')}</ul><div class="service-cta">Explore →</div>`; servicesGrid.appendChild(card); });
+    
+    // ======================== PROCESS STEPS ========================
+    const processSteps = [
+      { num: "01", title: "Discovery & Strategy", duration: "Week 1", desc: "Deep discovery session covering goals, competitors, target audience, technical constraints.", details: ["Brand & business audit", "Competitor analysis", "User personas", "Technical mapping"] },
+      { num: "02", title: "Design & Prototype", duration: "Week 2–3", desc: "High-fidelity mockups in Figma. Every screen, every state, every breakpoint.", details: ["Wireframes", "Figma designs", "Interactive prototype", "Design system"] },
+      { num: "03", title: "Build & Develop", duration: "Week 3–6", desc: "Clean, scalable code. Production-ready from day one — no technical debt.", details: ["Frontend React/Next.js", "Backend Node.js", "Database design", "API development"] },
+      { num: "04", title: "Launch & Support", duration: "Week 6–7", desc: "Thorough testing across devices. Deploy to production with 30-day post-launch support.", details: ["Cross-browser testing", "Performance audit", "Production deploy", "30-day support"] }
+    ];
+    const processGrid = document.getElementById('processGrid');
+    if(processGrid) processSteps.forEach(step => { const div = document.createElement('div'); div.className = 'fade-up'; div.style.background = '#0D0D0D'; div.style.padding = '48px 36px'; div.innerHTML = `<div style="font-family:'Cormorant Garamond'; font-size:80px; font-weight:300; color:#C9A84C; opacity:0.12;">${step.num}</div><div style="font-family:'Space Mono'; font-size:10px; color:#C9A84C; letter-spacing:0.2em;">${step.duration}</div><h3 style="font-family:'Cormorant Garamond'; font-size:24px; color:#FFF;">${step.title}</h3><p style="font-size:13px; color:#555; margin:16px 0;">${step.desc}</p><ul style="border-top:1px solid #1A1A1A; padding-top:20px;">${step.details.map(dt => `<li style="font-size:12px; color:#444; padding:5px 0; display:flex; gap:8px;"><span style="width:4px; height:4px; background:#C9A84C; border-radius:50%;"></span>${dt}</li>`).join('')}</ul>`; processGrid.appendChild(div); });
+    
+    // ======================== LOAD PROJECTS FROM API ========================
+    async function loadProjects() {
+      try {
+        const res = await fetch(`${API_URL}/projects`);
+        const projects = await res.json();
+        const container = document.getElementById('portfolioContainer');
+        if(!container) return;
+        
+        if(projects.length === 0) {
+          container.innerHTML = '<div class="section-header-centered"><p style="color:#999;">No projects yet. Check back soon!</p></div>';
+          return;
+        }
+        
+        container.innerHTML = projects.map((p, idx) => `
+          <div class="portfolio-item ${idx % 2 === 1 ? 'reverse' : ''}">
+            <div class="portfolio-visual">
+              <div class="browser-mockup">
+                <div class="browser-bar">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                  <span class="browser-url">${(p.live_url || 'project.demo').replace('https://', '')}</span>
+                </div>
+                <div class="browser-content" style="background: linear-gradient(135deg, #0D0D0D, #1A1A1A);">
+                  <div class="portfolio-overlay">
+                    <p style="font-family:'Cormorant Garamond',serif; font-size:32px; color:#C9A84C;">${escapeHtml(p.title)}</p>
+                    <p style="color:rgba(255,255,255,0.6);">${escapeHtml(p.category || 'Project')}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <span class="portfolio-number">${String(idx+1).padStart(2,'0')}</span>
+              <span class="portfolio-tag">${escapeHtml(p.category || 'Project')}</span>
+              <h3>${escapeHtml(p.title)}</h3>
+              <p>${escapeHtml(p.description || '')}</p>
+              <ul class="portfolio-tech">${(p.technologies || []).map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+              <a href="${p.live_url || '#'}" target="_blank" class="portfolio-link">View Live Project →</a>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) { console.error('Error loading projects:', e); }
     }
-  } catch(e) { console.error(e); }
-}
-
-function logout() { localStorage.removeItem('adminToken'); location.reload(); }
-
-async function loadData() {
-  if (!token) token = localStorage.getItem('adminToken');
-  if (!token) return;
-  const headers = { 'Authorization': `Bearer ${token}` };
-  try {
-    const [msgsRes, statsRes, projRes] = await Promise.all([
-      fetch(API_URL + '/api/messages', { headers }),
-      fetch(API_URL + '/api/stats', { headers }),
-      fetch(API_URL + '/api/projects')
-    ]);
-    const msgs = await msgsRes.json();
-    const stats = await statsRes.json();
-    const projects = await projRes.json();
     
-    document.getElementById('totalMessages').innerText = stats.totalMessages || 0;
-    document.getElementById('todayMessages').innerText = stats.todayMessages || 0;
-    document.getElementById('totalProjects').innerText = stats.totalProjects || 0;
-    document.getElementById('unreadMessages').innerText = stats.unreadMessages || 0;
+    // ======================== CONTACT FORM SUBMIT TO API ========================
+    const contactForm = document.getElementById('contact-form');
+    if(contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = {
+          name: document.getElementById('formName')?.value,
+          email: document.getElementById('formEmail')?.value,
+          phone: document.getElementById('formPhone')?.value,
+          projectType: document.getElementById('formProject')?.value,
+          budget: document.getElementById('formBudget')?.value,
+          message: document.getElementById('formMessage')?.value
+        };
+        const btn = contactForm.querySelector('.btn-submit');
+        const original = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          const res = await fetch(`${API_URL}/messages`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+          if(res.ok) {
+            btn.textContent = '✓ Message Sent!';
+            btn.style.background = '#2D7D46';
+            setTimeout(() => { btn.textContent = original; btn.style.background = '#C9A84C'; btn.disabled = false; contactForm.reset(); }, 2000);
+          } else throw new Error('Failed to send');
+        } catch(err) { btn.textContent = original; btn.disabled = false; alert('Error sending message. Please try again.'); }
+      });
+    }
     
-    document.getElementById('messagesBody').innerHTML = msgs.map(m => `
-      <tr>
-        <td>${m.id}</td>
-        <td style="font-family:'Space Mono'; font-size:11px;">${m.date || '-'}</td>
-        <td><strong>${escapeHtml(m.name)}</strong></td>
-        <td>${escapeHtml(m.email)}</td>
-        <td>${escapeHtml(m.phone || '-')}</td>
-        <td>${escapeHtml(m.project_type || '-')}</td>
-        <td>${escapeHtml(m.budget || '-')}</td>
-        <td style="max-width:200px; word-break:break-word;">${escapeHtml((m.message || '').substring(0,60))}${(m.message||'').length>60?'...':''}</td>
-        <td><span class="status-badge ${m.read ? 'status-read' : 'status-unread'}">${m.read ? 'Read' : 'Unread'}</span></td>
-        <td><button class="delete-btn" onclick="deleteMessage(${m.id})">Delete</button></td>
-      </tr>
-    `).join('');
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
     
-    document.getElementById('projectsGrid').innerHTML = projects.map(p => `
-      <div class="project-card">
-        <img src="${p.image_url || 'https://placehold.co/400x200/1A1A1A/555?text=No+Image'}" onerror="this.src='https://placehold.co/400x200/1A1A1A/555?text=No+Image'">
-        <h4>${escapeHtml(p.title)}</h4>
-        <p style="color:#C9A84C; font-size:11px;">${escapeHtml(p.category || 'Uncategorized')}</p>
-        <p>${escapeHtml((p.description || '').substring(0,100))}${(p.description||'').length>100?'...':''}</p>
-        <div class="card-actions">
-          <button class="edit-btn" onclick="editProject(${p.id})">Edit</button>
-          <button class="delete-btn" onclick="deleteProject(${p.id})">Delete</button>
-        </div>
-      </div>
-    `).join('');
-  } catch(e) { console.error(e); }
-}
-
-function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
-
-async function deleteMessage(id) { if(confirm('Delete this message?')) { await fetch(API_URL+'/api/messages/'+id, { method:'DELETE', headers:{'Authorization':`Bearer ${token}`} }); loadData(); } }
-async function deleteProject(id) { if(confirm('Delete this project?')) { await fetch(API_URL+'/api/projects/'+id, { method:'DELETE', headers:{'Authorization':`Bearer ${token}`} }); loadData(); } }
-
-function openProjectModal(project=null) {
-  document.getElementById('modalTitle').innerText = project ? 'Edit Project' : 'Add New Project';
-  document.getElementById('projectId').value = project?.id || '';
-  document.getElementById('projectTitle').value = project?.title || '';
-  document.getElementById('projectCategory').value = project?.category || '';
-  document.getElementById('projectDescription').value = project?.description || '';
-  document.getElementById('projectTechnologies').value = project?.technologies?.join(', ') || '';
-  document.getElementById('projectLiveUrl').value = project?.live_url || '';
-  document.getElementById('projectImageUrl').value = project?.image_url || '';
-  document.getElementById('projectOrder').value = project?.display_order || '';
-  document.getElementById('projectModal').style.display = 'flex';
-}
-function editProject(id) { fetch(API_URL+'/api/projects').then(r=>r.json()).then(projects => { const p = projects.find(x=>x.id==id); if(p) openProjectModal(p); }); }
-function closeProjectModal() { document.getElementById('projectModal').style.display = 'none'; }
-
-async function saveProject() {
-  const id = document.getElementById('projectId').value;
-  const data = {
-    title: document.getElementById('projectTitle').value,
-    category: document.getElementById('projectCategory').value,
-    description: document.getElementById('projectDescription').value,
-    technologies: document.getElementById('projectTechnologies').value.split(',').map(s=>s.trim()).filter(s=>s),
-    live_url: document.getElementById('projectLiveUrl').value,
-    image_url: document.getElementById('projectImageUrl').value,
-    display_order: parseInt(document.getElementById('projectOrder').value) || 0
-  };
-  if(!data.title) { alert('Project title is required'); return; }
-  const url = id ? API_URL+'/api/projects/'+id : API_URL+'/api/projects';
-  const method = id ? 'PUT' : 'POST';
-  await fetch(url, { method, headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`}, body:JSON.stringify(data) });
-  closeProjectModal();
-  loadData();
-}
-
-async function exportCSV() {
-  const res = await fetch(API_URL+'/api/messages', { headers:{'Authorization':`Bearer ${token}`} });
-  const msgs = await res.json();
-  if(!msgs.length) return alert('No messages to export');
-  let csv = 'ID,Date,Name,Email,Phone,Project Type,Budget,Message,Status\n';
-  msgs.forEach(m => { csv += `${m.id},"${m.date}","${m.name}","${m.email}","${m.phone||''}","${m.project_type||''}","${m.budget||''}","${(m.message||'').replace(/"/g,'""')}","${m.read?'Read':'Unread'}"\n`; });
-  const blob = new Blob(["\uFEFF" + csv], {type:'text/csv'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `onyx_messages_${new Date().toISOString().split('T')[0]}.csv`; a.click(); URL.revokeObjectURL(a.href);
-}
-
-if(localStorage.getItem('adminToken')) { token = localStorage.getItem('adminToken'); document.getElementById('loginContainer').style.display='none'; document.getElementById('dashboard').style.display='block'; loadData(); }
-</script>
+    // ======================== NAVBAR SCROLL ========================
+    window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+    
+    // ======================== HAMBURGER MENU ========================
+    const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobile-menu');
+    if(hamburger && mobileMenu) {
+      hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : ''; });
+      document.querySelectorAll('.mobile-nav-link').forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('active'); mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }); });
+    }
+    
+    // ======================== INTERSECTION OBSERVER (FADE-UP) ========================
+    const fadeObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up, .service-card, .portfolio-item, .testimonial-card, .differentiator, .contact-info-item').forEach(el => fadeObserver.observe(el));
+    
+    // ======================== COUNT-UP STATS ========================
+    function countUp(el, target, suffix = '') { let start = 0, step = target / 120; const timer = setInterval(() => { start += step; if(start >= target) { el.textContent = target + suffix; clearInterval(timer); } else { el.textContent = Math.floor(start) + suffix; } }, 16); }
+    const statsObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting && !entry.target.dataset.counted) { entry.target.dataset.counted = 'true'; const target = parseInt(entry.target.dataset.target); const suffix = entry.target.dataset.suffix || ''; countUp(entry.target, target, suffix); } }); }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+    
+    // ======================== CURSOR GLOW ========================
+    const cursorGlow = document.querySelector('.cursor-glow'); document.addEventListener('mousemove', (e) => { if(cursorGlow) { cursorGlow.style.left = e.clientX + 'px'; cursorGlow.style.top = e.clientY + 'px'; } });
+    
+    // ======================== SMOOTH SCROLL ========================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if(target) { const offset = document.getElementById('navbar')?.offsetHeight || 0; window.scrollTo({ top: target.offsetTop - offset - 20, behavior: 'smooth' }); } }); });
+    
+    // ======================== ACTIVE NAV LINK ========================
+    const sections = document.querySelectorAll('section[id]'); const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => { let current = ''; sections.forEach(section => { const sectionTop = section.offsetTop - 100; if(window.scrollY >= sectionTop) current = section.getAttribute('id'); }); navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href') === '#' + current) link.classList.add('active'); }); });
+    
+    // Load projects on page load
+    loadProjects();
+  </script>
 </body>
 </html>
