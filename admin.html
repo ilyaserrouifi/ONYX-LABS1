@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onyx Labs — Admin Dashboard | Database</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #080808; color: #E8E8E8; overflow-x: hidden; }
+    .navbar { background: #0D0D0D; border-bottom: 1px solid #1E1E1E; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 16px; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #C9A84C; display: flex; align-items: center; gap: 12px; }
+    .logo svg { width: 36px; height: 36px; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 32px; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+    .stat-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 28px; text-align: center; transition: 0.3s; }
+    .stat-card:hover { border-color: #C9A84C; }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #C9A84C; }
+    .stat-label { font-size: 12px; color: #666; margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+    .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #C9A84C; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 12px; font-weight: 500; transition: 0.3s; }
+    .btn-primary { background: #C9A84C; color: #080808; }
+    .btn-primary:hover { background: #E8C96A; transform: translateY(-2px); }
+    .btn-danger { background: #ff6b6b; color: #fff; }
+    .btn-danger:hover { background: #ff5252; }
+    .btn-secondary { background: #1E1E1E; color: #E8E8E8; border: 1px solid #333; }
+    .btn-secondary:hover { border-color: #C9A84C; color: #C9A84C; }
+    table { width: 100%; border-collapse: collapse; background: #0D0D0D; border-radius: 12px; overflow: hidden; }
+    th, td { padding: 14px; text-align: left; border-bottom: 1px solid #1E1E1E; }
+    th { color: #C9A84C; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: #111; }
+    td { font-size: 13px; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 24px; }
+    .project-card { background: #111; border: 1px solid #1E1E1E; border-radius: 16px; padding: 20px; transition: 0.3s; }
+    .project-card:hover { border-color: #C9A84C; transform: translateY(-4px); }
+    .project-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; background: #1A1A1A; }
+    .project-card h4 { font-size: 18px; margin-bottom: 8px; }
+    .project-card p { font-size: 12px; color: #999; margin-bottom: 16px; line-height: 1.6; }
+    .card-actions { display: flex; gap: 12px; }
+    .delete-btn { background: transparent; border: 1px solid #ff6b6b; color: #ff6b6b; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+    .delete-btn:hover { background: rgba(255,107,107,0.2); }
+    .edit-btn { background: transparent; border: 1px solid #C9A84C; color: #C9A84C; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+    .edit-btn:hover { background: rgba(201,168,76,0.2); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
+    .modal-content { background: #0D0D0D; border: 1px solid #C9A84C; border-radius: 24px; padding: 32px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
+    .modal-content h3 { color: #C9A84C; margin-bottom: 24px; }
+    input, textarea, select { width: 100%; background: #080808; border: 1px solid #1E1E1E; border-radius: 8px; padding: 12px; color: #FFF; margin-bottom: 16px; font-family: 'Inter'; font-size: 14px; }
+    input:focus, textarea:focus { outline: none; border-color: #C9A84C; }
+    .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #080808; }
+    .login-card { background: #0D0D0D; border: 1px solid #C9A84C; border-radius: 24px; padding: 48px; width: 100%; max-width: 400px; text-align: center; }
+    .login-card h2 { color: #C9A84C; margin-bottom: 24px; }
+    .login-card input { margin-bottom: 20px; }
+    .table-container { overflow-x: auto; margin-bottom: 48px; }
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 500; }
+    .status-read { background: rgba(46, 125, 50, 0.2); color: #4caf50; border: 1px solid #4caf50; }
+    .status-unread { background: rgba(201, 168, 76, 0.2); color: #C9A84C; border: 1px solid #C9A84C; }
+    @media (max-width: 768px) { .stats { grid-template-columns: repeat(2,1fr); } .container { padding: 20px; } .section-header { flex-direction: column; align-items: flex-start; } }
+    @media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div id="loginContainer" class="login-container">
+  <div class="login-card">
+    <div style="margin-bottom: 20px;"><svg width="50" height="50" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3" fill="none"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg></div>
+    <h2>ONYX LABS</h2>
+    <p style="color:#666; margin-bottom:24px;">Admin Dashboard · Database</p>
+    <input type="text" id="loginUsername" placeholder="Username" autocomplete="off">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()" class="btn btn-primary" style="width:100%;">Login →</button>
+    <p id="loginError" style="color:#ff6b6b; margin-top:20px; font-size:12px; display:none;">Invalid credentials (admin / admin2025)</p>
+  </div>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <div class="navbar">
+    <div class="logo"><svg width="30" height="30" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3" fill="none"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/></svg> ONYX LABS | ADMIN</div>
+    <div><button class="btn btn-secondary" onclick="logout()">Logout</button></div>
+  </div>
+  <div class="container">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-number" id="totalMessages">0</div><div class="stat-label">Total Messages</div></div>
+      <div class="stat-card"><div class="stat-number" id="todayMessages">0</div><div class="stat-label">Today</div></div>
+      <div class="stat-card"><div class="stat-number" id="totalProjects">0</div><div class="stat-label">Projects</div></div>
+      <div class="stat-card"><div class="stat-number" id="unreadMessages">0</div><div class="stat-label">Unread</div></div>
+    </div>
+
+    <div class="section-header"><h2>📬 Messages & Reservations</h2><button class="btn btn-primary" onclick="exportCSV()">📎 Export CSV</button></div>
+    <div class="table-container"><table id="messagesTable"><thead><tr><th>ID</th><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Project</th><th>Budget</th><th>Message</th><th>Status</th><th>Action</th></tr></thead><tbody id="messagesBody"></tbody></table></div>
+
+    <div class="section-header"><h2>📁 Portfolio Projects</h2><button class="btn btn-primary" onclick="openProjectModal()">+ Add Project</button></div>
+    <div id="projectsGrid" class="projects-grid"></div>
+  </div>
+</div>
+
+<div id="projectModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Add New Project</h3><input type="hidden" id="projectId"><input type="text" id="projectTitle" placeholder="Project Title *"><input type="text" id="projectCategory" placeholder="Category (e.g., Web, Mobile)"><textarea id="projectDescription" rows="3" placeholder="Project Description"></textarea><input type="text" id="projectTechnologies" placeholder="Technologies (comma separated)"><input type="text" id="projectLiveUrl" placeholder="Live URL (https://...)"><input type="text" id="projectImageUrl" placeholder="Image URL (optional)"><input type="number" id="projectOrder" placeholder="Display Order (1,2,3...)"><div style="display:flex; gap:12px; margin-top:20px;"><button class="btn btn-primary" onclick="saveProject()">Save Project</button><button class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button></div></div></div>
+
+<script>
+const API_URL = '';
+let token = null;
+
+async function login() {
+  const username = document.getElementById('loginUsername').value;
+  const password = document.getElementById('loginPassword').value;
+  try {
+    const res = await fetch(API_URL + '/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      token = data.token;
+      localStorage.setItem('adminToken', token);
+      document.getElementById('loginContainer').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadData();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
+    }
+  } catch(e) { console.error(e); }
+}
+
+function logout() { localStorage.removeItem('adminToken'); location.reload(); }
+
+async function loadData() {
+  if (!token) token = localStorage.getItem('adminToken');
+  if (!token) return;
+  const headers = { 'Authorization': `Bearer ${token}` };
+  try {
+    const [msgsRes, statsRes, projRes] = await Promise.all([
+      fetch(API_URL + '/api/messages', { headers }),
+      fetch(API_URL + '/api/stats', { headers }),
+      fetch(API_URL + '/api/projects')
+    ]);
+    const msgs = await msgsRes.json();
+    const stats = await statsRes.json();
+    const projects = await projRes.json();
+    
+    document.getElementById('totalMessages').innerText = stats.totalMessages || 0;
+    document.getElementById('todayMessages').innerText = stats.todayMessages || 0;
+    document.getElementById('totalProjects').innerText = stats.totalProjects || 0;
+    document.getElementById('unreadMessages').innerText = stats.unreadMessages || 0;
+    
+    document.getElementById('messagesBody').innerHTML = msgs.map(m => `
+      <tr>
+        <td>${m.id}</td>
+        <td style="font-family:'Space Mono'; font-size:11px;">${m.date || '-'}</td>
+        <td><strong>${escapeHtml(m.name)}</strong></td>
+        <td>${escapeHtml(m.email)}</td>
+        <td>${escapeHtml(m.phone || '-')}</td>
+        <td>${escapeHtml(m.project_type || '-')}</td>
+        <td>${escapeHtml(m.budget || '-')}</td>
+        <td style="max-width:200px; word-break:break-word;">${escapeHtml((m.message || '').substring(0,60))}${(m.message||'').length>60?'...':''}</td>
+        <td><span class="status-badge ${m.read ? 'status-read' : 'status-unread'}">${m.read ? 'Read' : 'Unread'}</span></td>
+        <td><button class="delete-btn" onclick="deleteMessage(${m.id})">Delete</button></td>
+      </tr>
+    `).join('');
+    
+    document.getElementById('projectsGrid').innerHTML = projects.map(p => `
+      <div class="project-card">
+        <img src="${p.image_url || 'https://placehold.co/400x200/1A1A1A/555?text=No+Image'}" onerror="this.src='https://placehold.co/400x200/1A1A1A/555?text=No+Image'">
+        <h4>${escapeHtml(p.title)}</h4>
+        <p style="color:#C9A84C; font-size:11px;">${escapeHtml(p.category || 'Uncategorized')}</p>
+        <p>${escapeHtml((p.description || '').substring(0,100))}${(p.description||'').length>100?'...':''}</p>
+        <div class="card-actions">
+          <button class="edit-btn" onclick="editProject(${p.id})">Edit</button>
+          <button class="delete-btn" onclick="deleteProject(${p.id})">Delete</button>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m) { if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m; }); }
+
+async function deleteMessage(id) { if(confirm('Delete this message?')) { await fetch(API_URL+'/api/messages/'+id, { method:'DELETE', headers:{'Authorization':`Bearer ${token}`} }); loadData(); } }
+async function deleteProject(id) { if(confirm('Delete this project?')) { await fetch(API_URL+'/api/projects/'+id, { method:'DELETE', headers:{'Authorization':`Bearer ${token}`} }); loadData(); } }
+
+function openProjectModal(project=null) {
+  document.getElementById('modalTitle').innerText = project ? 'Edit Project' : 'Add New Project';
+  document.getElementById('projectId').value = project?.id || '';
+  document.getElementById('projectTitle').value = project?.title || '';
+  document.getElementById('projectCategory').value = project?.category || '';
+  document.getElementById('projectDescription').value = project?.description || '';
+  document.getElementById('projectTechnologies').value = project?.technologies?.join(', ') || '';
+  document.getElementById('projectLiveUrl').value = project?.live_url || '';
+  document.getElementById('projectImageUrl').value = project?.image_url || '';
+  document.getElementById('projectOrder').value = project?.display_order || '';
+  document.getElementById('projectModal').style.display = 'flex';
+}
+function editProject(id) { fetch(API_URL+'/api/projects').then(r=>r.json()).then(projects => { const p = projects.find(x=>x.id==id); if(p) openProjectModal(p); }); }
+function closeProjectModal() { document.getElementById('projectModal').style.display = 'none'; }
+
+async function saveProject() {
+  const id = document.getElementById('projectId').value;
+  const data = {
+    title: document.getElementById('projectTitle').value,
+    category: document.getElementById('projectCategory').value,
+    description: document.getElementById('projectDescription').value,
+    technologies: document.getElementById('projectTechnologies').value.split(',').map(s=>s.trim()).filter(s=>s),
+    live_url: document.getElementById('projectLiveUrl').value,
+    image_url: document.getElementById('projectImageUrl').value,
+    display_order: parseInt(document.getElementById('projectOrder').value) || 0
+  };
+  if(!data.title) { alert('Project title is required'); return; }
+  const url = id ? API_URL+'/api/projects/'+id : API_URL+'/api/projects';
+  const method = id ? 'PUT' : 'POST';
+  await fetch(url, { method, headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`}, body:JSON.stringify(data) });
+  closeProjectModal();
+  loadData();
+}
+
+async function exportCSV() {
+  const res = await fetch(API_URL+'/api/messages', { headers:{'Authorization':`Bearer ${token}`} });
+  const msgs = await res.json();
+  if(!msgs.length) return alert('No messages to export');
+  let csv = 'ID,Date,Name,Email,Phone,Project Type,Budget,Message,Status\n';
+  msgs.forEach(m => { csv += `${m.id},"${m.date}","${m.name}","${m.email}","${m.phone||''}","${m.project_type||''}","${m.budget||''}","${(m.message||'').replace(/"/g,'""')}","${m.read?'Read':'Unread'}"\n`; });
+  const blob = new Blob(["\uFEFF" + csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `onyx_messages_${new Date().toISOString().split('T')[0]}.csv`; a.click(); URL.revokeObjectURL(a.href);
+}
+
+if(localStorage.getItem('adminToken')) { token = localStorage.getItem('adminToken'); document.getElementById('loginContainer').style.display='none'; document.getElementById('dashboard').style.display='block'; loadData(); }
+</script>
+</body>
+</html>
