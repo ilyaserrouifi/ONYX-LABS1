@@ -7,10 +7,7 @@
   <meta name="description" content="Onyx Labs — Moroccan digital agency crafting high-end websites, web platforms, and smart systems.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z' stroke='%23C9A84C' stroke-width='3' fill='none'/%3E%3C/svg%3E">
   <style>
-    /* ============================================ */
-    /* ONYX LABS — COMPLETE WEBSITE + API + ADMIN   */
-    /* DATABASE: Neon PostgreSQL via GitHub/Vercel  */
-    /* ============================================ */
+    /* ===== GOOGLE FONTS ===== */
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -95,8 +92,8 @@
     .browser-dot.yellow { background: #FEBC2E; }
     .browser-dot.green { background: #28C840; }
     .browser-url { font-family: 'Space Mono', monospace; font-size: 11px; color: #444; margin-left: 12px; }
-    .browser-content { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; background-size: cover; background-position: center; background-color: #111; }
-    .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 12px; }
+    .browser-content { height: 320px; display: flex; align-items: center; justify-content: center; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .portfolio-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 12px; }
     .portfolio-number { font-family: 'Space Mono', monospace; font-size: 11px; color: #C9A84C; letter-spacing: 0.2em; display: block; margin-bottom: 12px; }
     .portfolio-tag { font-family: 'Inter', sans-serif; font-size: 11px; color: #C9A84C; letter-spacing: 0.15em; text-transform: uppercase; background: #111; border: 1px solid #222; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
     .portfolio-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: #FFF; margin-bottom: 20px; }
@@ -181,7 +178,7 @@
   <!-- SERVICES SECTION -->
   <section id="services" style="background:#0D0D0D; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— WHAT WE BUILD —</span><div class="section-title">Services Built<br>For <span class="gold">Results.</span></div><div class="section-subtitle">From a simple landing page to a complex business platform — we engineer digital products that perform.</div></div><div class="services-grid" id="servicesGrid"></div></div></section>
 
-  <!-- PORTFOLIO SECTION (Dynamic from API) -->
+  <!-- PORTFOLIO SECTION (Dynamic from API with Images) -->
   <section id="portfolio" style="background:#080808; padding:120px 0;"><div class="container"><div class="section-header-centered"><span class="section-eyebrow">— OUR WORK —</span><div class="section-title">Projects That<br>Speak Louder.</div><div class="section-subtitle">A selection of recent work — each one built from scratch, delivered on time, and performing above expectations.</div></div><div id="portfolioContainer"></div></div></section>
 
   <!-- PROCESS SECTION -->
@@ -200,7 +197,7 @@
   <footer style="background:#040404; border-top:1px solid #111; padding:80px 0 40px;"><div class="container"><div class="footer-grid"><div><div class="logo-wrapper" style="margin-bottom:20px;"><svg width="42" height="42" viewBox="0 0 100 100"><path d="M50 5 L85 25 L95 50 L85 75 L50 95 L15 75 L5 50 L15 25 Z" stroke="#C9A84C" stroke-width="3"/><path d="M50 18 L75 32 L82 50 L75 68 L50 82 L25 68 L18 50 L25 32 Z" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/><path d="M50 28 L66 38 L70 50 L66 62 L50 72 L34 62 L30 50 L34 38 Z" fill="#C9A84C" opacity="0.15"/><circle cx="50" cy="5" r="2.5" fill="#C9A84C"/></svg><div><div class="logo-name">ONYX LABS</div><div class="logo-sub">DIGITAL AGENCY FOR ————</div></div></div><p style="font-size:14px; color:#444; line-height:1.8;">Crafting high-end web & smart systems for businesses, brands & startups across Morocco and beyond.</p><a href="https://www.instagram.com/lonyxlabs" target="_blank" style="color:#555; text-decoration:none; margin-top:20px; display:inline-block;">📸 @lonyxlabs</a></div><div><div class="footer-col-title">SERVICES</div><ul class="footer-links"><li><a href="#">Web Design</a></li><li><a href="#">Custom Systems</a></li><li><a href="#">E-Commerce</a></li><li><a href="#">Automation</a></li><li><a href="#">Brand & UI</a></li></ul></div><div><div class="footer-col-title">COMPANY</div><ul class="footer-links"><li><a href="#portfolio">Our Work</a></li><li><a href="#process">Process</a></li><li><a href="#why-us">Why Us</a></li><li><a href="#contact">Start a Project</a></li><li><a href="https://www.instagram.com/lonyxlabs">Instagram</a></li></ul></div><div><div class="footer-col-title">CONTACT</div><ul class="footer-links"><li><a href="tel:+212669206279">📞 +212 669-206279</a></li><li><a href="https://wa.me/212669206279">💬 WhatsApp</a></li><li><a href="https://www.instagram.com/lonyxlabs">📸 @lonyxlabs</a></li><li>📍 Morocco</li></ul></div></div><div style="border-top:1px solid #0F0F0F; padding-top:32px; margin-top:60px; display:flex; justify-content:space-between; flex-wrap:wrap;"><span>© 2025 Onyx Labs. All rights reserved.</span><span>Crafted with precision in Morocco 🇲🇦</span><span>Built by Onyx Labs</span></div></div></footer>
 
   <script>
-    // API Base URL (Vercel deployment)
+    // API Base URL
     const API_URL = 'https://onyx-labs-1-npyl.vercel.app/api';
     
     // ======================== SERVICES INJECTION ========================
@@ -225,7 +222,7 @@
     const processGrid = document.getElementById('processGrid');
     if(processGrid) processSteps.forEach(step => { const div = document.createElement('div'); div.className = 'fade-up'; div.style.background = '#0D0D0D'; div.style.padding = '48px 36px'; div.innerHTML = `<div style="font-family:'Cormorant Garamond'; font-size:80px; font-weight:300; color:#C9A84C; opacity:0.12;">${step.num}</div><div style="font-family:'Space Mono'; font-size:10px; color:#C9A84C; letter-spacing:0.2em;">${step.duration}</div><h3 style="font-family:'Cormorant Garamond'; font-size:24px; color:#FFF;">${step.title}</h3><p style="font-size:13px; color:#555; margin:16px 0;">${step.desc}</p><ul style="border-top:1px solid #1A1A1A; padding-top:20px;">${step.details.map(dt => `<li style="font-size:12px; color:#444; padding:5px 0; display:flex; gap:8px;"><span style="width:4px; height:4px; background:#C9A84C; border-radius:50%;"></span>${dt}</li>`).join('')}</ul>`; processGrid.appendChild(div); });
     
-    // ======================== LOAD PROJECTS FROM API ========================
+    // ======================== LOAD PROJECTS FROM API WITH IMAGES ========================
     async function loadProjects() {
       try {
         const res = await fetch(`${API_URL}/projects`);
@@ -248,7 +245,7 @@
                   <span class="browser-dot green"></span>
                   <span class="browser-url">${(p.live_url || 'project.demo').replace('https://', '')}</span>
                 </div>
-                <div class="browser-content" style="background: linear-gradient(135deg, #0D0D0D, #1A1A1A);">
+                <div class="browser-content" style="background: ${p.image_url ? `url('${p.image_url}') center/cover no-repeat` : 'linear-gradient(135deg, #0D0D0D, #1A1A1A)'};">
                   <div class="portfolio-overlay">
                     <p style="font-family:'Cormorant Garamond',serif; font-size:32px; color:#C9A84C;">${escapeHtml(p.title)}</p>
                     <p style="color:rgba(255,255,255,0.6);">${escapeHtml(p.category || 'Project')}</p>
@@ -269,7 +266,7 @@
       } catch(e) { console.error('Error loading projects:', e); }
     }
     
-    // ======================== CONTACT FORM SUBMIT TO API ========================
+    // ======================== CONTACT FORM SUBMIT ========================
     const contactForm = document.getElementById('contact-form');
     if(contactForm) {
       contactForm.addEventListener('submit', async (e) => {
